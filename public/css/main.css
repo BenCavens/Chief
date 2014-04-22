@@ -25,7 +25,7 @@
    }
 
    .pagetitle{
-      margin-bottom:36px;
+      margin:36px 0;
    }
 
    .pagetitle-sub{
@@ -70,9 +70,103 @@
    }
 
 /* ==========================================================================
-   Top Navigation
+   Sidebar Navigation
+   ========================================================================== */
+   
+/*   .topnav{
+      background-color: #000000;
+      color:#f5f5f5;
+   }*/
+   .nav-section{
+      background-color:#222222;
+   }
+
+  .nav li{
+      list-style-type:none outside none;
+      display:inline-block;
+   }
+
+   .nav>li>a:hover,
+   .nav>li>a.active,
+   .nav>li>a:focus{
+      background-color: #ffffff;
+   }
+
+   .brand{
+      position: absolute;
+      top:2px;
+      left:0;
+      right:0;
+      text-align: center;
+   }
+
+   .brand-logo{
+      color:#ffffff;
+      font-size:26px;
+      font-weight:400;
+
+   }
+
+   .main{
+      /*margin-left:260px;*/
+   }
+
+
+/* ==========================================================================
+   Module: Actionline
    ========================================================================== */
 
+   .actionline{
+      font-size:16px;
+   }
+
+/* ==========================================================================
+   Post
+   ========================================================================== */
+
+   .post{
+      margin-bottom:48px;
+   }
+
+   .teaser{
+      color:#999999;
+      font-size:0.9em;
+   }
+
+   .post-title{
+      margin-bottom: 0;
+   }
+
+   .post-subtitle{
+      font-family: "freight-text-pro",Georgia,Cambria,"Times New Roman",Times,serif;
+      letter-spacing: .01rem;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 26px;
+      line-height: 1.1;
+      color:#999999;
+   }
+
+/* ==========================================================================
+   Post form elements
+   ========================================================================== */
+
+   .form-control-post{
+      border:0;
+      outline:0;
+      padding:9px;
+      padding-bottom:0; /* realistic writing line */
+      width: 100%;
+   }
+
+   .post-txtr{
+      font-family: "freight-text-pro",Georgia,Cambria,"Times New Roman",Times,serif;
+      letter-spacing: .01rem;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1.4;
+   }
 
 
 /* ==========================================================================

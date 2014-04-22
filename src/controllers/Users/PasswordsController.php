@@ -95,7 +95,7 @@ class PasswordsController extends Controller {
        {
        		if($this->authManager->resetPassword($user,$resetcode))
        		{
-       			return View::make('chief::users.password.reset_confirm',compact('user'));
+       			return View::make('chief::users.password.resetconfirm',compact('user'));
        		}
 
         }

@@ -264,5 +264,66 @@ class ChiefPostTest extends TestCase {
 		$this->assertTrue( $views == ($post->views - 1));
 	}
 
+	/**
+	 * Category and tag filter
+	 *
+	 * @return void
+	 */
+	public function testGetByCategory()
+	{
+		$chief = App::make('Bencavens\Chief\Chief');
+
+		$post = $chief->post()->getById(1);
+		$post->categories()->attach(1);
+
+		$postCheck = $chief->post()->getByCategory(1)->first();
+
+		$this->assertTrue( $postCheck instanceof \Illuminate\Database\Eloquent\Model );
+		$this->assertTrue( $postCheck instanceof \Bencavens\Chief\Posts\Post );
+		$this->assertTrue( $postCheck->title == $post->title );
+	}
+
+	/**
+	 * Category and tag filter
+	 *
+	 * @return void
+	 */
+	public function testGetByCategories()
+	{
+		$chief = App::make('Bencavens\Chief\Chief');
+
+		$post = $chief->post()->getById(1);
+		$post->categories()->attach(1);
+		$post->categories()->attach(2);
+
+		$postCheck = $chief->post()->getByCategories(array(1,2))->first();
+
+		$this->assertTrue( $postCheck instanceof \Illuminate\Database\Eloquent\Model );
+		$this->assertTrue( $postCheck instanceof \Bencavens\Chief\Posts\Post );
+		$this->assertTrue( $postCheck->title == $post->title );
+	}
+
+	/**
+	 * Category and tag filter
+	 *
+	 * @return void
+	 */
+	public function testGetWithoutCategory()
+	{
+		$chief = App::make('Bencavens\Chief\Chief');
+
+		$post = $chief->post()->getWithoutCategory()->first();
+
+		$this->assertTrue( $post instanceof \Illuminate\Database\Eloquent\Model );
+		$this->assertTrue( $post instanceof \Bencavens\Chief\Posts\Post );
+		
+		$post->categories()->attach(1);
+		
+		$postCheck = $chief->post()->getWithoutCategory()->first();
+
+		$this->assertFalse( $postCheck->title == $post->title );
+	}
+
+
 
 }

@@ -147,23 +147,86 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 		return $model->where('parent_id',$post_id)->get();
 	}
 
-	public function getByCategory( $category_id )
+	/**
+	 * Get posts by Tag
+	 *
+	 * @param 	int 	$tag_id
+	 * @param 	array 	$options
+	 * @return  Collection
+	 */
+	public function getByTag( $tag_id, array $options = array() )
 	{
+		$model = $this->extend( $options );
+
+		return $model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
+							 ->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
+							 ->where('chieftaggables.tag_id','=',$tag_id)
+							 ->get();
 
 	}
 
-	public function getByCategories( array $category_ids )
+	/**
+	 * Get posts by Tags
+	 *
+	 * @param 	array 	$tag_ids
+	 * @param 	array 	$options
+	 * @return  Collection
+	 */
+	public function getByTags( array $tag_ids, array $options = array() )
 	{
+		$model = $this->extend( $options );
 
+		return $model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
+							 ->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
+							 ->whereIn('chieftaggables.tag_id',$tag_ids)
+							 ->get();
 	}
 
-	public function getByTag( $tag_id )
+	/**
+	 * Get posts by category
+	 *
+	 * @param 	int 	$category_id
+	 * @param 	array 	$options
+	 * @return  Collection
+	 */
+	public function getByCategory( $category_id, array $options = array() )
 	{
-
+		return $this->getByTag( $category_id, $options );
 	}
 
-	public function getByTags( array $tag_ids )
+	/**
+	 * Get posts by categories
+	 *
+	 * @param 	array 	$category_ids
+	 * @param 	array 	$options
+	 * @return  Collection
+	 */
+	public function getByCategories( array $category_ids, array $options = array() )
 	{
+		return $this->getByTags( $category_ids, $options );
+	}
+
+	/**
+	 * Get posts without a category
+	 *
+	 * TODO: should refactor to a single SQL statement. 
+	 * Now it is just an ugly three-part retrieval due to the difficult nature of a morphByMany relation
+	 * 
+	 * @param 	array 	$options
+	 * @return  Collection
+	 */
+	public function getWithoutCategory( array $options = array() )
+	{
+		
+		$categories = \Bencavens\Chief\Tags\Category::all();
+		$category_ids = array_pair($categories->toArray(),'id');
+
+		// Get all posts that have categories
+		$postsCategorized = $this->getByCategories($category_ids);
+
+		$model = $this->extend( $options );
+
+		return $model->whereNotIn('id',array_pair($postsCategorized->toArray(),'id'));
 
 	}
 
