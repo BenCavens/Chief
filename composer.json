@@ -1,6 +1,7 @@
 {
     "name": "bencavens/chief",
-    "description": "",
+    "description": "A blog engine for Laravel site environments",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Ben Cavens",
