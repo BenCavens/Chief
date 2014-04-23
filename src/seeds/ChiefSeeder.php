@@ -20,14 +20,24 @@ class ChiefSeeder extends Seeder {
 
 		Eloquent::unguard();
 
-        // Seed
-		$this->call('ChiefPostsTableSeeder');
-		$this->call('ChiefUsersTableSeeder');
-		$this->call('ChiefCommentsTableSeeder');
-		$this->call('ChiefTagsTableSeeder');
+		// Setup the default admin account
+        $users =  array(
+              
+              array(
+                'email' 		=> 'admin@admin.com',
+                'password' 		=> Hash::make('chief'),
+                'first_name' 	=> 'Admin',
+                'last_name' 	=> 'Chief',
+                'activated' 	=> 1,
+                'created_at' 	=> date('Y-m-d H:i:s'),
+                'updated_at' 	=> date('Y-m-d H:i:s'),
+                'avatar'    	=> '',
+                'slug' 			=> 'admin',
+            )
+        );
 
-		// Fakeseeding
-		// $this->call('ChiefFakerSeeder');
+        // Uncomment the below to run the seeder
+        DB::table('chiefusers')->insert($users);
 		
 	}
 }
