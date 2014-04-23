@@ -1,11 +1,10 @@
-# Chief
+# Chief #
 
 warning: Chief is still under heavy development and should not be used for production purposes.
 
 ## What is Chief
 A Blog engine for the Laravel environment. Chief provides a nice maintenance tool for the client and a clean API for the developer to work with. 
 
-## How to start developing
 No assumptions are made for the blogging implementation on the site. 
 This as a break from other cms philosophies where the site had to be build upon the tool itself. Chief merely acts as a module and can be added any given moment during the development stage. 
 The developer should design his blog pages with the use of the Chief API as a storage intermediate.  
@@ -13,28 +12,46 @@ The developer should design his blog pages with the use of the Chief API as a st
 ## dependencies
 Laravel specific. Currently, the Chief package is designed to run inside a Laravel environment. There are no immediate plans to broaden the scope to other environments.
 
-# Installing Chief
-Add following line to your composer.json: "bencavens/chief":"dev-master"
+## Installing Chief
 
-Run composer update from the command line
+### Environment setup
 
-Add the service provider to your application
-'Bencavens\Chief\ChiefServiceProvider'
+#### Include Chief ServiceProvider
+Add following line to the required packages list in your composer.json.
 
-Create the Chief alias
-'Chief'	=> 'Bencavens\Chief\ChiefFacade'
+```json
+"require": {
+    "bencavens/chief":"dev-master"
+}
+```
+
+Run `composer update` from the command line to download the package.
+
+Add `'Bencavens\Chief\ChiefServiceProvider'` as a new service provider to your providers array inside the config/app.php.
+
+Create the Chief alias `'Chief'	=> 'Bencavens\Chief\ChiefFacade'` in the config/app.php as well.
 
 
-Migrate the database tables
-php artisan migrate --package="bencavens/chief"
-10 tables will be added to your database. They are all prefixed with 'chief' to avoid any collisions.
+#### Publish config and assets files
+`php artisan config:publish bencavens/chief`
+`php artisan asset:publish bencavens/chief`
+
+Note: Chief posts makes use of the great redactor wysiwyg editor and handle image uploads behind the scenes mostly without any hassle. 
+Should your image inserts fail, be sure to verify that the `public/packages/bencavens/chief/assets` path exists and is writable. 
+
+#### Mail
+For optimal usage, make sure your mail environment is up and running. 
+Chief will use your default mail settings for its user interaction, like password resetting and the likes.
 
 
-Seed the tables
-php artisan db:seed --class="ChiefSeeder" for the default admin (admin@example.com - chief)
+### Database setup
 
-publish config and assets files
-php artisan config:publish bencavens/chief
-php artisan asset:publish bencavens/chief
+#### Migrate the database tables.
+The necessary tables will be added to your default selected database (config/database.php > default). 
+The tables are all prefixed with 'chief' to avoid any collisions.
+`php artisan migrate --package="bencavens/chief"`
 
-For optimal usage, make sure your mail env is up and running. Chief will use your default mail settings for some user interaction.
+#### Default user
+`php artisan db:seed --class="ChiefSeeder"` for the default admin (admin@example.com - password: chief)
+Your environment should be set to anything but production for seeding to be allowed.
+
