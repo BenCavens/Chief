@@ -51,28 +51,19 @@ Route::group(array('prefix' => 'chief','before' => 'chief.auth'),function(){
 
 
 
-/*
-|--------------------------------------------------------------------------
-| Chief Authentication Filters
-|--------------------------------------------------------------------------
-|
-| 
-|
-*/
-
+/**
+ * -------------------------------------------------------
+ * Chief Auth filter
+ * -------------------------------------------------------
+ *
+ */
 Route::filter('chief.auth', function()
 {
 	if(false == \Bencavens\Chief\ChiefFacade::auth()->isLogged())
 	{
+		\Bencavens\Chief\Services\Intent::put();
+
 		return Redirect::route('chief.user.login');
 	}
 	
 });
-
-/**
- * TODO
- * 
- * - tags and categories
- * - auth
- * - spamfilter Akismet
- */

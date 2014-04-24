@@ -2,30 +2,123 @@
 
 use Bencavens\Chief\Core\BaseRepository;
 use Bencavens\Chief\Core\ChiefRepositoryInterface;
+use Bencavens\Chief\Core\Traits\Filterable;
+use Bencavens\Chief\Core\Traits\Sortable;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface,ChiefRepositoryInterface{
 
+	use Filterable,Sortable;
+
+	/**
+	 * List of allowed filters in the query payload
+	 *
+	 * @var array
+	 */
+	public $filterables = array('title','search');
+
+
 	public function __construct( Post $model )
 	{
-		$this->model = $model;
+		$this->setModel( $model );
 	}
 
 	/**
 	 * Fetch
 	 *
-	 * Don't include our versions by default
+	 * Don't include our versions by default. 
+	 * Versions of posts should be fetched by specific methods like getVersionsById
 	 * 
-	 * @param 	array 	$options
-	 * @param 	int  	$paginated 
 	 * @return  Illuminate\Database\Eloquent\Collection
 	 *
 	 */
-	public function fetch( array $options = array(), $paginated = null )
+	public function fetch()
 	{
-		// Defaults
-		$options = array('whereParentId' => 0) + $options;
+		$this->model = $this->model->where('parent_id',0);
+		
+		return parent::fetch();
+	}
 
-		return parent::fetch( $options, $paginated );
+	/**
+	 * Get all published articles
+	 *
+	 * @return  Collection
+	 */
+	public function getAllPublished()
+	{
+		return $this->getByStatus('published');
+	}
+
+	/**
+	 * Get all Archived articles
+	 *
+	 * @return  Collection
+	 */
+	public function getAllArchived()
+	{
+		return $this->getByStatus('archived');
+	}
+
+	/**
+	 * Get all Draft articles
+	 *
+	 * @return  Collection
+	 */
+	public function getAllDraft()
+	{
+		return $this->getByStatus('draft');
+	}
+
+	/**
+	 * Get posts by status
+	 *
+	 * @param 	string 	$status
+	 * @return  Collection
+	 */
+	protected function getByStatus( $status )
+	{
+		$this->model = $this->model->where('status',$status);
+		
+		return $this->fetch();
+	}
+
+	/**
+	 * Get posts by Author
+	 *
+	 * @param 	int 	$user_id
+	 * @return 	Collection
+	 */
+	public function getByAuthor( $author_id)
+	{
+		$this->model = $this->model->join('chiefauthors','chiefposts.id','=','chiefauthors.post_id')
+						     	   ->where('chiefauthors.user_id',$author_id);
+
+		return $this->fetch();
+	}
+
+	/**
+	 * Get posts by popularity
+	 *
+	 * @return 	Collection
+	 */
+	public function getPopular()
+	{
+		$this->model = $this->model->orderBy('views','DESC');
+		
+		return $this->fetch();
+	}
+
+	/**
+	 * Get all versions for a post
+	 *
+	 * @param 	int 	$type_id
+	 * @return  Collection
+	 */
+	public function getVersionsById( $post_id )
+	{
+		$this->model = $this->model->where('parent_id',$post_id)->orderBy('created_at','DESC');
+		
+		// Go around our PostRepo fetch so we can retrieve versions
+		return parent::fetch();
 	}
 
 	/**
@@ -54,114 +147,21 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 
 	 } 
 
-	/**
-	 * Get all published articles
-	 *
-	 * @param 	array 	$options
-	 * @param 	int 	$paginated
-	 * @return  Collection
-	 */
-	public function getAllPublished( array $options = array(), $paginated = null )
-	{
-		return $this->getByStatus('published', $options, $paginated );
-	}
-
-	/**
-	 * Get all Archived articles
-	 *
-	 * @param 	array 	$options
-	 * @param 	int 	$paginated
-	 * @return  Collection
-	 */
-	public function getAllArchived( array $options = array(), $paginated = null )
-	{
-		return $this->getByStatus('archived', $options, $paginated );
-	}
-
-	/**
-	 * Get all Draft articles
-	 *
-	 * @param 	array 	$options
-	 * @param 	int 	$paginated
-	 * @return  Collection
-	 */
-	public function getAllDraft( array $options = array(), $paginated = null )
-	{
-		return $this->getByStatus('draft', $options, $paginated );
-	}
-
-	/**
-	 * Get posts by status
-	 *
-	 * @param 	string 	$status
-	 * @param 	array 	$options
-	 * @param 	int 	$paginated
-	 * @return  Collection
-	 */
-	protected function getByStatus( $status, array $options = array(), $paginated = null )
-	{
-		$options = array('where'=> array('status',$status)) + $options;
-
-		return $this->fetch( $options, $paginated );
-	}
-
-	/**
-	 * Get posts by Author
-	 *
-	 * @param 	int 	$user_id
-	 * @param 	int 	$paginated
-	 * @return 	Collection
-	 */
-	public function getByAuthor( $author_id, $paginated = null )
-	{
-		$posts = $this->model->join('chiefauthors','chiefposts.id','=','chiefauthors.post_id')
-						   ->where('chiefauthors.user_id',$author_id);
-
-		return ($paginated) ? $posts->paginate($paginated) : $posts->get();
-	}
-
-	/**
-	 * Get posts by popularity
-	 *
-	 * @param 	int 	$user_id
-	 * @return 	Collection
-	 */
-	public function getPopular( array $options = array() )
-	{
-		$options = array('orderBy'=> array('views','DESC')) + $options;
-
-		return $this->fetch( $options );
-	}
-
-	/**
-	 * Get all versions for a post
-	 *
-	 * @param 	int 	$type_id
-	 * @param 	array 	$options
-	 * @return  Collection
-	 */
-	public function getVersionsById( $post_id, array $options = array('orderBy' => array('created_at','DESC')) )
-	{
-		$model = $this->extend( $options );
-
-		return $model->where('parent_id',$post_id)->get();
-	}
+	
 
 	/**
 	 * Get posts by Tag
 	 *
 	 * @param 	int 	$tag_id
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getByTag( $tag_id, array $options = array() )
+	public function getByTag( $tag_id )
 	{
-		$model = $this->extend( $options );
+		$this->model = $this->model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
+							 		->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
+							 		->where('chieftaggables.tag_id','=',$tag_id);
 
-		return $model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
-							 ->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
-							 ->where('chieftaggables.tag_id','=',$tag_id)
-							 ->get();
+		return $this->fetch();
 
 	}
 
@@ -169,65 +169,71 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	 * Get posts by Tags
 	 *
 	 * @param 	array 	$tag_ids
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getByTags( array $tag_ids, array $options = array() )
+	public function getByTags( array $tag_ids )
 	{
-		$model = $this->extend( $options );
+		$this->model = $this->model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
+								   ->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
+								   ->whereIn('chieftaggables.tag_id',$tag_ids);
 
-		return $model->join('chieftaggables','chiefposts.id','=','chieftaggables.taggable_id')
-							 ->where('chieftaggables.taggable_type','=','Bencavens\Chief\Posts\Post')
-							 ->whereIn('chieftaggables.tag_id',$tag_ids)
-							 ->get();
+		return $this->fetch();
 	}
 
 	/**
 	 * Get posts by category
 	 *
 	 * @param 	int 	$category_id
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getByCategory( $category_id, array $options = array() )
+	public function getByCategory( $category_id )
 	{
-		return $this->getByTag( $category_id, $options );
+		return $this->getByTag( $category_id );
 	}
 
 	/**
 	 * Get posts by categories
 	 *
 	 * @param 	array 	$category_ids
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getByCategories( array $category_ids, array $options = array() )
+	public function getByCategories( array $category_ids )
 	{
-		return $this->getByTags( $category_ids, $options );
+		return $this->getByTags( $category_ids );
 	}
 
 	/**
 	 * Get posts without a category
 	 *
-	 * TODO: should refactor to a single SQL statement. 
-	 * Now it is just an ugly three-part retrieval due to the difficult nature of a morphByMany relation
+	 * [TODO] 	should refactor to a single SQL statement. 
+	 * 			Now it is just an ugly three-part retrieval due to the difficult nature of a morphByMany relation
 	 * 
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getWithoutCategory( array $options = array() )
+	public function getWithoutCategory()
 	{
-		
 		$categories = \Bencavens\Chief\Tags\Category::all();
 		$category_ids = array_pair($categories->toArray(),'id');
 
 		// Get all posts that have categories
 		$postsCategorized = $this->getByCategories($category_ids);
 
-		$model = $this->extend( $options );
+		$this->model = $this->model->whereNotIn('id',array_pair($postsCategorized->toArray(),'id'));
 
-		return $model->whereNotIn('id',array_pair($postsCategorized->toArray(),'id'));
+		return $this->fetch();
 
+	}
+
+	/**
+	 * Custom global Text search
+	 *
+	 * @param 	string 	$value
+	 * @return 	void
+	 */
+	public function filterBySearch( $value )
+	{
+		$this->model = $this->model->where('title','LIKE','%'.$value.'%')
+								   ->orWhere('content','LIKE','%'.$value.'%');
 	}
 
 	

@@ -24,7 +24,7 @@ class ChiefPostVersionTest extends TestCase {
 
 		));
 
-		$post = $chief->post()->find(1);
+		$post = $chief->post()->getById(1);
 
 		$versions = $chief->post()->getVersionsById( 1 );
 

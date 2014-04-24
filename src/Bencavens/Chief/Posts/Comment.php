@@ -1,8 +1,8 @@
 <?php namespace Bencavens\Chief\Posts;
 
-use Illuminate\Database\Eloquent\Model;
+use Bencavens\Chief\Core\BaseModel;
 
-class Comment extends Model{
+class Comment extends BaseModel{
 
 	protected $table = 'chiefcomments';
 

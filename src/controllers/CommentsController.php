@@ -14,7 +14,7 @@ class CommentsController extends Controller{
 	 */
 	 public function index()
 	 {
-	 	$comments = Chief::comment()->getAll(array(),10);
+	 	$comments = Chief::comment()->paginate(10)->orderBy('created_at','DESC')->getAll();
 
 	 	return View::make('chief::comments.index',compact('comments'));
 	 }

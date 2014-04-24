@@ -6,58 +6,49 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
 
 	public function __construct( Comment $model )
 	{
-		$this->model = $model;
+		$this->setModel( $model );
 	}
 
 	/**
 	 * Fetch
 	 *
-	 * 
-	 * 
-	 * @param 	array 	$options
-	 * @param 	int  	$paginated 
 	 * @return  Illuminate\Database\Eloquent\Collection
-	 *
 	 */
-	public function fetch( array $options = array(), $paginated = null )
+	public function fetch()
 	{
-		// Defaults
-		$options = array('with' => array('post','author')) + $options;
-
-		return parent::fetch( $options, $paginated );
+		$this->model = $this->model->with('post','author');
+		
+		return parent::fetch();
 	}
 
 	/**
 	 * Get all Approved articles
 	 *
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getAllApproved( array $options = array() )
+	public function getAllApproved()
 	{
-		return $this->getByStatus('approved', $options );
+		return $this->getByStatus('approved');
 	}
 
 	/**
 	 * Get all Denied articles
 	 *
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getAllDenied( array $options = array() )
+	public function getAllDenied()
 	{
-		return $this->getByStatus('denied', $options );
+		return $this->getByStatus('denied');
 	}
 
 	/**
 	 * Get all Pending articles
 	 *
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getAllPending( array $options = array() )
+	public function getAllPending()
 	{
-		return $this->getByStatus('pending', $options );
+		return $this->getByStatus('pending');
 	}
 
 	/**
@@ -65,43 +56,39 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
 	 *
 	 * @param 	int 	$post_id
 	 * @param 	string 	$status
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getByPost( $post_id, $status = 'approved', array $options = array() )
+	public function getByPost( $post_id, $status = 'approved')
 	{
-		$options = array('where'=> array('post_id',$post_id)) + $options;
+		$this->model = $this->model->where('post_id',$post_id);
 
-		return $this->getByStatus($status, $options );
+		return $this->getByStatus($status);
 	}
 
 	/**
 	 * Get all comments by post
 	 *
 	 * @param 	int 	$post_id
-	 * @param 	string 	$status
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	public function getAllByPost( $post_id, array $options = array() )
+	public function getAllByPost( $post_id )
 	{
-		$options = array('where'=> array('post_id',$post_id)) + $options;
+		$this->model = $this->model->where('post_id',$post_id);
 
-		return $this->getAll( $options );
+		return $this->fetch();
 	}
 
 	/**
-	 * Get posts by status
+	 * Get comments by status
 	 *
 	 * @param 	string 	$status
-	 * @param 	array 	$options
 	 * @return  Collection
 	 */
-	protected function getByStatus($status, array $options = array() )
+	protected function getByStatus($status)
 	{
-		$options = array('where'=> array('status',$status)) + $options;
+		$this->model = $this->model->where('status',$status);
 
-		return $this->getAll( $options );
+		return $this->fetch();
 	}
 
 

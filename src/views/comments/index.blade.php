@@ -9,26 +9,24 @@
 		
 		<div class="comment">
 			
-			<span class="comment-title">{{ $comment->title }}
-
-				{{ $comment->username }} wrote on {{ $comment->created_at }} in {{ $comment->post ? $comment->post->title : '' }}	
-
+			<span class="comment-title">{{ showStatusDot($comment->status) }}
+				{{ $comment->post ? $comment->post->title : '' }}
 			</span>
+			
 
 			<span class="actionline">
+				<a href="{{ route('chief.comments.edit',$comment->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+			</span>
 
-					<a href="{{ route('chief.comments.edit',$comment->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-
-				</span>
-
-				<span class="label label-info">{{ $comment->status }}</span>
-				
-			
-			<p class="teaser">
+			<p class="post-teaser">
 
 				{{ $comment->content }}
 
 			</p>
+
+			<span class="post-metadata">
+				 {{ $comment->username }} wrote on {{ $comment->created_at->format('d F Y H:s') }}	
+			</span>
 
 		</div>
 

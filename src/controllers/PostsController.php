@@ -14,7 +14,7 @@ class PostsController extends Controller{
 	 */
 	 public function index()
 	 {
-	 	$posts = Chief::post()->getAll(array(),6);
+	 	$posts = Chief::post()->paginate(6)->sort(array('title'))->orderBy('updated_at','DESC')->filter()->getAll();
 
 	 	return View::make('chief::posts.index',compact('posts'));
 	 }

@@ -14,7 +14,7 @@ class UsersController extends Controller{
 	 */
 	 public function index()
 	 {
-	 	$users = Chief::user()->getAll(array(),6);
+	 	$users = Chief::user()->paginate(12)->getAll();
 
 	 	return View::make('chief::users.index',compact('users'));
 	 }

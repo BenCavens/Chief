@@ -54,8 +54,7 @@ class SessionsController extends Controller{
             // Get the userslug from the freshly logged user
             $user = $this->auth->getLogged();
 
-            return Redirect::route('chief.posts.index');
-            //return Redirect::route('chief.user.dashboard');
+            return Redirect::intended(route('chief.posts.index'));
         }
 
         return Redirect::back()->withErrors(Chief::error()->get())->withInput();

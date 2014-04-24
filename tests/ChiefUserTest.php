@@ -53,7 +53,7 @@ class ChiefUserTest extends TestCase {
 
 		$userRepo = $chief->user();
 
-		$user = $userRepo->find(1);
+		$user = $userRepo->getById(1);
 
 		$this->assertTrue( $user instanceof \Illuminate\Database\Eloquent\Model );
 	}
@@ -76,13 +76,31 @@ class ChiefUserTest extends TestCase {
 
 		$chief = App::make('Bencavens\Chief\Chief');
 
-		$userRepo = $chief->user();
+		$users = $chief->user()->orderBy('email','DESC')->getAll();
 
-		$user = $userRepo->find(1);
-
-		$this->assertTrue( $user instanceof \Illuminate\Database\Eloquent\Model );
-		$this->assertTrue( $user instanceof \Bencavens\Chief\Tests\CustomUserModel );
+		$this->assertTrue( $users instanceof \Illuminate\Database\Eloquent\Collection );
 	
+	}
+
+	/**
+	 * Call user Model from UserRepository not allowed
+	 * @expectedException     Exception
+	 * @return void
+	 */
+	public function testUserRepositoryModelNotAllowedExtend()
+	{
+		include_once 'assets/Customrepositories.php';	
+		include_once 'assets/Custommodels.php';		
+
+		// UserRepository
+		$this->app->bind(
+			'Bencavens\Chief\Users\UserRepositoryInterface',
+			'Bencavens\Chief\Tests\CustomUserRepository'
+		);
+
+		$chief = App::make('Bencavens\Chief\Chief');
+
+		$user = $chief->user()->find(1);
 	}
 
 	/**

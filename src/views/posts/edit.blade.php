@@ -6,11 +6,13 @@
 
 		@include('chief::_partials.errors')
 
-		<h1 class="post-title">{{ Form::text('title',null,array('class' => 'form-control-post','autocomplete' => 'off','placeholder' => 'title')) }}</h1>
+		<h1 class="post-title">
+			{{ Form::text('title',null,array('class' => 'form-control-post','autocomplete' => 'off','placeholder' => 'title')) }}
+
+		</h1>
 		
 		<p class="post-subtitle">{{ Form::text('subtitle',null,array('class' => 'form-control-post','autocomplete' => 'off','placeholder' => 'subtitle')) }}</p>
 		
-
 
 		<div class="row">
 
@@ -20,45 +22,74 @@
 			
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-4 sidebar">
 
-				{{ Form::submit('submit',array('class'=>'btn btn-lg btn-success')) }}
-				<a href="{{ URL::previous() }}">cancel</a>
+				<div class="text-center">
+					
+					{{ Form::submit('save',array('class'=>'btn btn-lg btn-success btn-standalone')) }}
+					<br>
+					<a href="{{ URL::previous() }}" class="btn btn-default btn-xs">cancel</a>
 
-				<div class="btn-group" data-toggle="buttons">
+					<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-post-modal">
+						<i class="glyphicon glyphicon-trash"></i> 
+					</a>
+
+					<hr class="post-divider">
+
+					<div class="btn-group center" data-toggle="buttons">
 				  
-				  	@foreach(array('draft','published','archived') as $type )
-				  		
-				  		<label class="btn btn-default btn-checkable">
-				  			{{ Form::radio('status',$type,null,array('id'=>'status'.$type)) }}
-				  			{{ ucfirst($type) }}
-				  		</label>
-				  	
-				  	@endforeach
+					  	@foreach(array('draft','published','archived') as $type )
+					  		
+					  		<label class="btn btn-default btn-checkable">
+					  			{{ Form::radio('status',$type,null,array('id'=>'status'.$type)) }}
+					  			{{ ucfirst($type) }}
+					  		</label>
+					  	
+					  	@endforeach
 
-				 </div>
+					 </div>
 
-				 <span class="note">{{ Form::text('slug',null,array('class' => 'form-control-post','autocomplete' => 'off')) }}</span>
+					<br><br>
+					<div id="post-slug">
+						<label>Permalink</label>
+						<span class="note">{{ Form::text('slug',null,array('class' => 'form-control','autocomplete' => 'off')) }}</span>
+			 		</div>	
 
-				<div>
+					<hr class="post-divider">
 
-					<h4>Categories</h4>
+					<label>
+						{{ Form::checkbox('allow_comments',1,null) }} Allow comments
+					</label>
+
+				</div>
+
+				<hr class="post-divider" data-toggle="buttons">
+
+				<div class="text-center">
+
+					<h4 class="text-center">Categories</h4>
 
 					@foreach($categories as $category)
-						{{ Form::checkbox('category_ids[]',$category->id) }} {{ $category->name }}<br>
+						<label for="cat-{{$category->id}}" class="btn btn-xs btn-default">
+							{{ Form::checkbox('category_ids[]',$category->id,null,array('id' => 'cat-'.$category->id)) }} {{ $category->name }}
+						</label>
 					@endforeach
 
 				</div>
 
-				<div>
+				<div class="text-center">
 
-					<h4>Tags</h4>
+					<h4 class="text-center">Tags</h4>
 
 					@foreach($tags as $tag)
-						{{ Form::checkbox('tag_ids[]',$tag->id) }} {{ $tag->name }}<br>
+						<label for="tag-{{$tag->id}}" class="btn btn-xs btn-default">
+							{{ Form::checkbox('tag_ids[]',$tag->id,null,array('id' => 'tag-'.$tag->id)) }} {{ $tag->name }}
+						</label>
 					@endforeach
 
 				</div>
+
+				
 
 			</div>
 
@@ -66,11 +97,32 @@
 
 	{{ Form::close() }}
 
-	{{ Form::open(array('route' => array('chief.posts.destroy',$post->id),'method'=>'DELETE')) }}
+	<!-- Modal -->
+	<div class="modal fade" id="delete-post-modal" tabindex="-1" role="dialog" aria-labelledby="delete-post-modal-label" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				
+				<div class="modal-body text-center">
 
-		{{ Form::submit('delete') }}
+					<p class="text-danger">You are about to delete this post. <br>This will be permanent. No way back</p>
 
-	{{ Form::close() }}
+						{{ Form::open(array('route' => array('chief.posts.destroy',$post->id),'method'=>'DELETE')) }}
+
+							<button type="submit" class="btn btn-danger btn-lg">
+								<i class="glyphicon glyphicon-trash"></i> Yes, delete post
+							</button>
+
+						{{ Form::close() }}
+
+					<br>
+					<button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default btn-sm">no, keep it unharmed</button>
+						
+
+				</div>
+
+			</div>
+		</div>
+	</div>	
 
 @stop
 

@@ -20,7 +20,8 @@ class CreateChiefpostsTable extends Migration {
 			$table->string('slug');
 			$table->text('content');
 			$table->enum('status',array('draft','published','archived'))->default('draft');
-			
+			$table->boolean('allow_comments')->default(1);
+
 			/* Versioning */
 			$table->integer('parent_id')->unsigned()->default(0);
 			

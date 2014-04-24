@@ -13,7 +13,7 @@
 				{{ Form::text('username',null,array('class'=>'form-control','placeholder' => 'username')) }}
 				{{ Form::email('email',null,array('class'=>'form-control','placeholder' => 'email')) }}
 
-				{{ Form::textarea('content',null,array('class'=>'form-control-post post-txtr','placeholder' => 'comment')) }}
+				{{ Form::textarea('content',null,array('class'=>'form-control-post post-txtr','placeholder' => 'comment','id' => 'redactor_air')) }}
 			
 			</div>
 
@@ -50,4 +50,8 @@
 
 	{{ Form::close() }}
 
+@stop
+
+@section('redactor')
+	@include('chief::_partials.redactor_air')
 @stop

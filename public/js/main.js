@@ -26,6 +26,22 @@ function buttonCheckable()
     });
 }
 
+// Activate bootstrap tooltip
+function bootstrapTooltip()
+{
+	$trigger = $('body').find('.tooltip-trigger');
+
+	if($trigger.length > 0)
+	{
+		$trigger.tooltip({
+
+			trigger: 'hover click focus',
+			animation: true
+
+		});
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | Initiate our scripts
@@ -36,5 +52,6 @@ function buttonCheckable()
 $(document).ready(function(){
 
 	buttonCheckable();
+	bootstrapTooltip();
 
 });

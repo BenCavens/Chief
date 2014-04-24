@@ -324,6 +324,25 @@ class ChiefPostTest extends TestCase {
 		$this->assertFalse( $postCheck->title == $post->title );
 	}
 
+	/**
+	 * Get Paginated result
+	 *
+	 * @return void
+	 */
+	public function testGetPaginated()
+	{
+		$chief = App::make('Bencavens\Chief\Chief');
+
+		$posts = $chief->post()->paginate(2)->getAll();
+
+		$this->assertTrue( $posts instanceof \Illuminate\Pagination\Paginator );
+		
+		$this->assertTrue( count($posts) == 2 );
+
+		// Just to make sure the links() method can be fetched from our paginator
+		$posts->links();
+	}
+
 
 
 }

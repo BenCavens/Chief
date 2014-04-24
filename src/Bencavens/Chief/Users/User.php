@@ -1,8 +1,8 @@
 <?php namespace Bencavens\Chief\Users;
 
-use Illuminate\Database\Eloquent\Model;
+use Bencavens\Chief\Core\BaseModel;
 
-class User extends Model{
+class User extends BaseModel{
 
 	protected $table = 'chiefusers';
 

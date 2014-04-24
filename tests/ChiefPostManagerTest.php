@@ -79,7 +79,7 @@ class ChiefPostManagerTest extends TestCase {
 
 		$postManager = App::make('Bencavens\Chief\Posts\PostManager');
 
-		$input = array( 'title' => 'posttitle','slug' => 'xxx' );
+		$input = array( 'title' => 'posttitle','slug' => 'xxx','allow_comments' => 1 );
 		$this->assertTrue( $postManager->sanitizeInput( $input ) == $input );
 
 	}
@@ -93,7 +93,7 @@ class ChiefPostManagerTest extends TestCase {
 		$postManager = App::make('Bencavens\Chief\Posts\PostManager');
 
 		$input = array( 'title' => 'posttitle' );
-		$this->assertTrue( $postManager->sanitizeInput( $input ) == array('title' => 'posttitle','slug' => 'posttitle') );
+		$this->assertTrue( $postManager->sanitizeInput( $input ) == array('title' => 'posttitle','slug' => 'posttitle','allow_comments' => 0) );
 
 	}
 
@@ -107,7 +107,7 @@ class ChiefPostManagerTest extends TestCase {
 
 		$input = array( 'title' => 'posttitleé#' );
 		
-		$this->assertTrue( $postManager->sanitizeInput( $input ) == array('title' => 'posttitleé#','slug' => 'posttitlee') );
+		$this->assertTrue( $postManager->sanitizeInput( $input ) == array('title' => 'posttitleé#','slug' => 'posttitlee','allow_comments' => 0) );
 	}
 
 	/**

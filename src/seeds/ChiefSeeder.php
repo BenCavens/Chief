@@ -38,6 +38,73 @@ class ChiefSeeder extends Seeder {
 
         // Uncomment the below to run the seeder
         DB::table('chiefusers')->insert($users);
+
+        // $roles = array()
+
+        // 	array(
+        // 		'name'	=> 'guest',
+        // 		'permissions' 	=> array(
+        // 			'post-edit'		=> 0,
+        // 			'post-create'	=> 0,
+        // 			'post-delete'	=> 0,
+        // 			'comment-edit'	=> 0,
+        // 			'comment-delete'=> 0,
+        // 			'comments'		=> 0,
+        // 			'users'			=> 0,
+        // 			'admin'			=> 0
+        // 		),
+        // 		'created_at' 	=> date('Y-m-d H:i:s'),
+        //         'updated_at' 	=> date('Y-m-d H:i:s'),
+        // 	),
+        // 	array(
+        // 		'name'		=> 'co-writer',
+        // 		'permissions' 	=> array(
+        // 			'post-edit'		=> 0,
+        // 			'post-create'	=> 0,
+        // 			'post-delete'	=> 0,
+        // 			'comment-edit'	=> 0,
+        // 			'comment-delete'=> 0,
+        // 			'comments'		=> 0,
+        // 			'users'			=> 0,
+        // 			'admin'			=> 0
+        // 		),
+        // 		'created_at' 	=> date('Y-m-d H:i:s'),
+        //         'updated_at' 	=> date('Y-m-d H:i:s'),
+        // 	),
+        // 	array(
+        // 		'name'		=> 'writer',
+        // 		'permissions' 	=> array(
+        // 			'post-edit'		=> 0,
+        // 			'post-create'	=> 1,
+        // 			'post-delete'	=> 0,
+        // 			'comment-edit'	=> 0,
+        // 			'comment-delete'=> 0,
+        // 			'comments'		=> 0,
+        // 			'users'			=> 0,
+        // 			'admin'			=> 0
+        // 		),
+        // 		'created_at' 	=> date('Y-m-d H:i:s'),
+        //         'updated_at' 	=> date('Y-m-d H:i:s'),
+        // 	),
+        // 	array(
+        // 		'name'		=> 'chief',
+        // 		'permissions' 	=> array(
+        // 			'post-edit'		=> 1,
+        // 			'post-create'	=> 1,
+        // 			'post-delete'	=> 0,
+        // 			'comment-edit'	=> 0,
+        // 			'comment-delete'=> 0,
+        // 			'comments'		=> 0,
+        // 			'users'			=> 0,
+        // 			'admin'			=> 0
+        // 		),
+        // 		'created_at' 	=> date('Y-m-d H:i:s'),
+        //         'updated_at' 	=> date('Y-m-d H:i:s'),
+        // 	),
+
+
+
+        // );
 		
 	}
 }

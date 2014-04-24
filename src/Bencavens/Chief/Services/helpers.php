@@ -1,13 +1,13 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Helper: Teaser
-|--------------------------------------------------------------------------
-|
-| Short version of string
-| 
-|
+/**
+* --------------------------------------------------------------------------
+* Helper: Teaser
+* --------------------------------------------------------------------------
+*
+* Short version of string
+* 
+*
 */
 if(!function_exists('teaser'))
 {
@@ -26,14 +26,14 @@ if(!function_exists('teaser'))
 	}
 }
 
-/*
-|--------------------------------------------------------------------------
-| Helper: cleanupHTML
-|--------------------------------------------------------------------------
-|
-| Takes an input and cleans up unwanted / malicious HTML
-| 
-|
+/**
+* --------------------------------------------------------------------------
+* Helper: cleanupHTML
+* --------------------------------------------------------------------------
+*
+* Takes an input and cleans up unwanted / malicious HTML
+* 
+*
 */
 
 if(!function_exists('cleanupHTML'))
@@ -56,15 +56,15 @@ if(!function_exists('cleanupHTML'))
 	}
 }
 
-/*
-|--------------------------------------------------------------------------
-| Helper: is_image
-|--------------------------------------------------------------------------
-|
-| Verifies an image is really an image. 
-| credits: http://imperavi.com/redactor/docs/security/
-|
-| @return bool
+/**
+* --------------------------------------------------------------------------
+* Helper: is_image
+* --------------------------------------------------------------------------
+*
+* Verifies an image is really an image. 
+* credits: http://imperavi.com/redactor/docs/security/
+*
+* @return bool
 */
 if(!function_exists('is_image'))
 {
@@ -85,6 +85,71 @@ if(!function_exists('is_image'))
 	    if (array_pop($unpacked) == '89504e470d0a1a0a') return "png";
 
 	    return false;
+	}
+}
+
+
+/**
+ * --------------------------------------------------------------------------
+ * Display status label for both posts as users
+ * --------------------------------------------------------------------------
+ *
+ * @param   string 		$label
+ * @param 	string 		$type - override autotype
+ * @param 	bool 		$dot - show as dot or as full label
+ * @return  string
+ */
+if(!function_exists('showStatus'))
+{
+	function showStatus($label = null, $type = null,$dot = false)
+	{
+		if(empty($label)) return '';
+
+		if(is_null($type))
+		{
+			switch($label)
+			{
+				case 'draft':
+				case 'pending':
+					$type = 'warning';
+				break;
+				case 'archived':
+				case 'denied':
+					$type = 'danger';
+				break;
+				case 'published':
+				case 'approved':
+					$type = 'success';
+				break;
+				default: 
+					$type = 'default';
+				break;
+			}
+		}
+
+		if($dot)
+		{
+			return '<span class="label label-dot label-'.$type.' tooltip-trigger" data-toggle="tooltip" data-placement="right" title="'.$label.'">&nbsp;</span>';
+		}
+
+		return '<span class="label label-'.$type.'">'.$label.'</span>';
+	}
+}
+
+/**
+ * --------------------------------------------------------------------------
+ * Display status label as a dot
+ * --------------------------------------------------------------------------
+ *
+ * @param   string 		$label
+ * @param 	string 		$type - override autotype
+ * @return  string
+ */
+if(!function_exists('showStatusDot'))
+{
+	function showStatusDot($label = null, $type = null)
+	{
+		return showStatus($label,$type,true);
 	}
 }
 

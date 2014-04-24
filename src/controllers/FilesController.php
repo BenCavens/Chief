@@ -14,11 +14,6 @@ class FilesController extends Controller{
 	 */
 	 public function uploadImage()
 	 {
-	 	// Validation
-	 	// Check if it is an image...
-
-		
-	 	//$path = $dir.'/'.$file;
 	 	$dir = public_path('packages/bencavens/chief/assets/images');
 
 	 	$uploader = new Uploader($dir);
@@ -27,9 +22,13 @@ class FilesController extends Controller{
 	 	// Redactor specific return data
 	 	$data = array(
 
-	 		'filelink' => asset('packages/bencavens/chief/assets/images/'.$filedata->filename)
+	 		'filelink' 	=> asset('packages/bencavens/chief/assets/images/'.$filedata->filename),
+	 		'title' 	=> $filedata->originalName
 
 	 	);
+
+	 	// Verify the uploaded file is indeed an image
+	 	if(!is_image($data['filelink'])) return false;
 
 	 	return stripslashes(json_encode($data));
 	 }

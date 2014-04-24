@@ -6,25 +6,29 @@
 		<a class="btn btn-default btn-xs" href="{{ route('chief.users.create') }}"><i class="glyphicon glyphicon-pencil"></i> add another user</a>
 	</h1>
 
-	@foreach($users as $user)
-		
-		<div class="user">
+	<div class="users-cards clearfix">
+
+		@foreach($users as $user)
 			
-			<h3>{{ $user->fullname }}
+			<div class="user-card">
+				
+				<h3>{{ $user->fullname }}
 
-				<span class="actionline">
+					<span class="actionline">
 
-					<a href="{{ route('chief.users.edit',$user->id) }}"><i class="glyphicon glyphicon-cog"></i></a>
+						<a href="{{ route('chief.users.edit',$user->id) }}"><i class="glyphicon glyphicon-cog"></i></a>
 
-				</span>
+					</span>
 
-				<span class="label label-info">{{ $user->status }}</span>
+					<span class="label label-info">{{ $user->status }}</span>
 
-			</h3>
+				</h3>
 
-		</div>
+			</div>
 
-	@endforeach
+		@endforeach
+
+	</div>
 
 	{{ $users->links() }}
 	

@@ -2,7 +2,7 @@
 
 return array(
 
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Custom Repositories
@@ -10,7 +10,7 @@ return array(
 	|
 	| Chief provides the post listing out of the box. 
 	| Developers are free to add others listable resources like events, gigs, contacts,... 
-	|
+	| TO DEVELOP
 	*/
 
 	'repositories' => [

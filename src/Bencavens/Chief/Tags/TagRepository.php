@@ -15,17 +15,15 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface,Chi
 	 *
 	 * Filter on tags
 	 * 
-	 * @param 	array 	$options
-	 * @param 	int  	$paginated 
 	 * @return  Illuminate\Database\Eloquent\Collection
 	 *
 	 */
-	public function fetch( array $options = array(), $paginated = null )
+	public function fetch()
 	{
-		// Defaults
-		$options = array('whereCat' => 0) + $options;
-
-		return parent::fetch( $options, $paginated );
+		$this->model = $this->model->where('cat',0);
+		
+		return parent::fetch();
 	}
+	
 
 }

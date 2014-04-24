@@ -88,7 +88,7 @@ class PostManager{
 	public function sanitizeInput( array $input, Post $resource = null )
 	{
 		// Filter out our post columns
-		$columns = array('title','subtitle','slug','content','status');
+		$columns = array('title','subtitle','slug','content','status','allow_comments');
 
 		foreach($input as $attribute => $val )
 		{
@@ -100,13 +100,22 @@ class PostManager{
 			// Default slug
 			if(isset($input['title']) and !empty($input['title']) and (!isset($input['slug']) or empty($input['slug'])))
 			{
-				$input['slug'] = Str::slug( $input['title'], '-' );
+				$input['slug'] = $input['title'];
 			}
 		}
 
+		// Slug
+		if(isset($input['slug']))
+		{
+			$input['slug'] = Str::slug($input['slug']);
+		}
+		
 		// unique slug
 		// ....
 		
+		// Allow comments check
+		if(!isset($input['allow_comments'])) $input['allow_comments'] = 0;
+
 		return $input;
 	}
 

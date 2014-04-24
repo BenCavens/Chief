@@ -1,33 +1,64 @@
 <?php namespace Bencavens\Chief\Core;
 
+/**
+ * -----------------------------------------------------------
+ * Base Repository
+ * -----------------------------------------------------------
+ *
+ * @version 0.2
+ * @author 	Ben Cavens <cavensben@gmail.com>
+ */
+
+use Bencavens\Chief\Core\BaseModel;
+use Exception;
+
 abstract class BaseRepository{
 
 	/**
-	 * Base fetch for array / non-unique returns
+	 * Model instance
 	 *
-	 * Override this method if you want all queries to contain certain SQL
-	 * 
-	 * @param 	array 	$options
-	 * @param 	int  	$paginated 
-	 * @return Illuminate\Database\Eloquent\Collection
+	 * @var Model
 	 */
-	public function fetch( array $options = array(), $paginated = null )
-	{
-		$model = $this->extend( $options );
+	protected $model;
 
-		return ($paginated and is_int($paginated)) ? $model->paginate($paginated) : $model->get();
-	}
+	/**
+	 * Original Model instance
+	 *
+	 * @var Model
+	 */
+	protected $originalModel;
+
+	/**
+	 * Allowed Model Methods
+	 *
+	 * Whitelist of methods that can be invoked by the repository on the model
+	 * These are methods that don't break the Open-closed principle of our repo philosophy. 
+	 * Basically, it means that the returned result remains as excepted
+	 *
+	 * @var array
+	 */
+	protected $allowedModelMethods = array(
+
+		'orderBy','limit'
+
+	);
+
+	/**
+	 * Paginate our result set
+	 *
+	 * @var int
+	 */
+	protected $paginated = null;
+
 
 	/**
 	 * Get All records
 	 *
-	 * @param 	array 	$options
-	 * @param 	int  	$paginated 
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	public function getAll( array $options = array(), $paginated = null )
+	public function getAll()
 	{
-		return $this->fetch( $options, $paginated );
+		return $this->fetch();
 	}
 
 	/**
@@ -107,75 +138,65 @@ abstract class BaseRepository{
 	}
 
 	/**
-	 * Base Model extended Setup
+	 * Base fetch for all repository returns
 	 *
-	 * Takes our options and deliver it to our model
-	 * @param 	array 	$options
-	 * @return 	Model
+	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	protected function extend( array $options = array() )
+	public function fetch()
 	{
-		$model = $this->model;
-		
-		foreach($options as $method => $parameters)
-		{
-			$model = call_user_func_array(array($model,$method), (array)$parameters);
-		}
+		$result = ($this->paginated and is_int($this->paginated)) ? $this->model->paginate($this->paginated) : $this->model->get();
 
-		return $model;
+		$this->reset();
+
+		return $result;
 	}
 
 	/**
-	 * Expand options to a uniform array
+	 * Paginate the results
 	 *
-	 * @param 	array 	$options
-	 * @return 	array 	$options
+	 * @param 	int $limit
+	 * @return 	Repository
 	 */
-	// public function expandOptions( array $options = array() )
-	// {
-	// 	$expandedOptions = array();
+	public function paginate( $paginated = 25 )
+	{
+		$this->paginated = $paginated;
 
-	// 	/**
-	// 	 * Default way of delivering options is: array('where' => array('status',1))
-	// 	 * This way the user can override default options
-	// 	 *
-	// 	 * Alternative for providing additional options: array('where' => array( array('status',1) , array('parent_id', 0) ))
-	// 	 */
-	// 	foreach($options as $method => $option)
-	// 	{
-	// 		if(!is_array($option))
-	// 		{
-	// 			$expandedOptions[$method][] = array($option); 
-	// 		}
+		return $this;
+	}
 
-	// 		elseif(!is_array(reset($option)))
-	// 		{
-	// 			$expandedOptions[$method][] = $option;
-	// 		}
+	/**
+	 * Reset the Model to its original form
+	 *
+	 * @return void
+	 */
+	protected function reset()
+	{
+		$this->model = $this->originalModel;
+	}
 
-	// 		else
-	// 		{
-	// 			foreach($option as $opt)
-	// 			{
-	// 				$expandedOptions[$method][] = $opt;
-	// 			}
-	// 		}
-			
-	// 	}
-
-	// 	return $expandedOptions;
-	// }
+	/**
+	 * Assign a model to our Repository
+	 *
+	 * This method must be called by the child class constructor at instantiating of the class
+	 * @param 	Model 	$model
+	 * @return 	void
+	 */
+	protected function setModel( BaseModel $model )
+	{
+		$this->model = $this->originalModel = $model;
+	}
 
 	/**
 	 * Call to Eloquent model method
 	 *
-	 * @return Eloquent
+	 * @return Repository
 	 */
 	public function __call($method, $parameters)
 	{
-		if(!is_null($this->model))
+		if(in_array($method,$this->allowedModelMethods))
 		{
-			return call_user_func_array(array($this->model,$method), $parameters);
+			$this->model = call_user_func_array(array($this->model,$method), $parameters);
+			return $this;
 		}
 
 		throw new Exception('Method ['.$method.'] does not exist on the model instance: ['.get_class($this->model).']');

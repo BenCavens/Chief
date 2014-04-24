@@ -1,16 +1,15 @@
 # Chief #
 
-warning: Chief is still under heavy development and should not be used for production purposes.
+Warning: Chief is still under heavy development and is undergoing constant changes and should therefore not be used for production purposes.
 
 ## What is Chief
-A Blog engine for the Laravel environment. Chief provides a nice maintenance tool for the client and a clean API for the developer to work with. 
+A Blog engine for the Laravel environment. Chief provides a nice management tool for the client and a clean API for the developer to work with. 
 
 No assumptions are made for the blogging implementation on the site. 
-This as a break from other cms philosophies where the site had to be build upon the tool itself. Chief merely acts as a module and can be added any given moment during the development stage. 
-The developer should design his blog pages with the use of the Chief API as a storage intermediate.  
+This as a break from other cms philosophies where the site had to be build upon the tool itself. Chief merely acts as a module and can be added any given moment during the development stage. The developer should design his blog pages with the use of the Chief API as a storage intermediate.  
 
-## dependencies
-Laravel specific. Currently, the Chief package is designed to run inside a Laravel environment. There are no immediate plans to broaden the scope to other environments.
+## Dependencies
+Currently, the Chief package is designed to run inside a Laravel environment. For now, there is no intension to build support for other environments.
 
 ## Installing Chief
 
@@ -33,7 +32,7 @@ Create the Chief alias `'Chief'	=> 'Bencavens\Chief\ChiefFacade'` in the config/
 
 
 #### Publish config and assets files
-`php artisan config:publish bencavens/chief`
+`php artisan config:publish bencavens/chief` and 
 `php artisan asset:publish bencavens/chief`
 
 Note: Chief posts makes use of the great redactor wysiwyg editor and handle image uploads behind the scenes mostly without any hassle. 
@@ -51,7 +50,24 @@ The necessary tables will be added to your default selected database (config/dat
 The tables are all prefixed with 'chief' to avoid any collisions.
 `php artisan migrate --package="bencavens/chief"`
 
-#### Default user
-`php artisan db:seed --class="ChiefSeeder"` for the default admin (admin@example.com - password: chief)
+#### Set up your default user
+`php artisan db:seed --class="ChiefSeeder"` for the default admin (admin@admin.com - password: chief)
 Your environment should be set to anything but production for seeding to be allowed.
 
+That's it! You seem good to go now.
+
+## Gameplan
+
+- core classes: basemodel and baserepository
+- thumbnail addition for post: allow to choose an image as the post thumbnail for use in post overviews
+- provide easy spamfilter options (e.g. Akismet) for comment insertions via API. 
+- documentation around API
+- example snippets for frontend: blog overview, post detail page, comment form, comment insertion and validation
+- chief logo
+- filter and sorting options for posts, comments and user indexes
+- user roles and permissions: admin, manager, chief, writer, co-writer and guest
+- versioning for postrecords
+- install script (handle separate), needs to be removed after installment
+- dashboard for each user with his drafts and latest changed posts
+- admin settings page for general options (behind admin auth filter) like language, backup, API key??
+- chief::elements() - mysterious no?!

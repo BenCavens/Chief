@@ -1,12 +1,12 @@
 <?php namespace Bencavens\Chief\Posts;
 
-use Illuminate\Database\Eloquent\Model;
+use Bencavens\Chief\Core\BaseModel;
 
-class Post extends Model{
+class Post extends BaseModel{
 
 	protected $table = 'chiefposts';
 
-	protected $fillable = array('title','slug','content','status');
+	protected $fillable = array('title','subtitle','slug','content','status','allow_comments','comment_count','views','parent_id');
 
 	protected $softDelete =true;
 
@@ -94,18 +94,6 @@ class Post extends Model{
 		$this->tags()->sync( $tag_ids );
 	}
 
-	// /**
-	//  * Synchronise tags
-	//  *
-	//  * @param 	array 	$category_ids
-	//  * @return 	void
-	//  */
-	// public function synchroniseCategories( array $category_ids = array() )
-	// {
-	// 	$this->categories()->sync( $category_ids );
-	// }
-
-
 	/**
 	 * Creates a shortened version of input string
 	 *
@@ -117,6 +105,16 @@ class Post extends Model{
 	public function teaser($max = 210,$ending = null, $clean = true)
 	{
 		return teaser( $this->plaincontent,$max, $ending, $clean );
+	}
+
+	/**
+	 * Allow comments?
+	 *
+	 * @return 	bool
+	 */
+	public function allowComments()
+	{
+		return !!$this->getAttribute('allow_comments');
 	}
 
 }
