@@ -24,68 +24,80 @@
 
 			<div class="col-md-4 sidebar">
 
-				<div class="text-center">
+				<div>
 					
 					{{ Form::submit('save',array('class'=>'btn btn-lg btn-success btn-standalone')) }}
 					<br>
 					<a href="{{ URL::previous() }}" class="btn btn-default btn-xs">cancel</a>
 
-					<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-post-modal">
-						<i class="glyphicon glyphicon-trash"></i> 
-					</a>
+					@if(false != $permissions->post_delete)
+						<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-post-modal">
+							<i class="glyphicon glyphicon-trash"></i> 
+						</a>
+					@endif
 
-					<hr class="post-divider">
+					<hr>
 
-					<div class="btn-group center" data-toggle="buttons">
-				  
-					  	@foreach(array('draft','published','archived') as $type )
-					  		
-					  		<label class="btn btn-default btn-checkable">
-					  			{{ Form::radio('status',$type,null,array('id'=>'status'.$type)) }}
-					  			{{ ucfirst($type) }}
-					  		</label>
-					  	
-					  	@endforeach
+					<div class="btn-group btn-group-sm" data-toggle="buttons">
 
-					 </div>
+						<label for="status-draft" class="btn btn-checkable btn-default">
+				  			{{ Form::radio('status','draft',null,array('id'=>'status-draft')) }} Draft
+				  		</label>
 
-					<br><br>
+				  		<label for="status-published" class="btn btn-checkable btn-default">
+				  			{{ Form::radio('status','published',null,array('id'=>'status-published')) }} <span class="text-success">Publish</span>
+				  		</label>
+
+					  	<label for="status-archived" class="btn btn-checkable btn-default">
+				  			{{ Form::radio('status','archived',null,array('id'=>'status-archived')) }} <span class="text-danger">Archive</span>
+				  		</label>
+
+					</div>
+
+					<hr>
+
 					<div id="post-slug">
 						<label>Permalink</label>
 						<span class="note">{{ Form::text('slug',null,array('class' => 'form-control','autocomplete' => 'off')) }}</span>
 			 		</div>	
-
-					<hr class="post-divider">
-
+			 		<br>
 					<label>
 						{{ Form::checkbox('allow_comments',1,null) }} Allow comments
 					</label>
 
 				</div>
 
-				<hr class="post-divider" data-toggle="buttons">
+				<hr>
 
-				<div class="text-center">
+				<div>
 
-					<h4 class="text-center">Categories</h4>
+					<h4>Categories</h4>
 
-					@foreach($categories as $category)
-						<label for="cat-{{$category->id}}" class="btn btn-xs btn-default">
-							{{ Form::checkbox('category_ids[]',$category->id,null,array('id' => 'cat-'.$category->id)) }} {{ $category->name }}
-						</label>
-					@endforeach
+					<div data-toggle="buttons">
+
+						@foreach($categories as $category)
+							<label for="cat-{{$category->id}}" class="btn btn-xs btn-default btn-standalone btn-checkable">
+								{{ Form::checkbox('category_ids[]',$category->id,null,array('id' => 'cat-'.$category->id)) }} {{ $category->name }}
+							</label>
+						@endforeach
+
+					</div>
 
 				</div>
 
-				<div class="text-center">
+				<div>
 
-					<h4 class="text-center">Tags</h4>
+					<h4>Tags</h4>
 
-					@foreach($tags as $tag)
-						<label for="tag-{{$tag->id}}" class="btn btn-xs btn-default">
-							{{ Form::checkbox('tag_ids[]',$tag->id,null,array('id' => 'tag-'.$tag->id)) }} {{ $tag->name }}
-						</label>
-					@endforeach
+					<div data-toggle="buttons">
+
+						@foreach($tags as $tag)
+							<label for="tag-{{$tag->id}}" class="btn btn-xs btn-default btn-standalone btn-checkable">
+								{{ Form::checkbox('tag_ids[]',$tag->id,null,array('id' => 'tag-'.$tag->id)) }} {{ $tag->name }}
+							</label>
+						@endforeach
+
+					</div>
 
 				</div>
 
@@ -97,32 +109,34 @@
 
 	{{ Form::close() }}
 
-	<!-- Modal -->
-	<div class="modal fade" id="delete-post-modal" tabindex="-1" role="dialog" aria-labelledby="delete-post-modal-label" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				
-				<div class="modal-body text-center">
+	@if(false != $permissions->post_delete)
+		<!-- Modal -->
+		<div class="modal fade" id="delete-post-modal" tabindex="-1" role="dialog" aria-labelledby="delete-post-modal-label" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					
+					<div class="modal-body text-center">
 
-					<p class="text-danger">You are about to delete this post. <br>This will be permanent. No way back</p>
+						<p class="text-danger">You are about to delete this post. <br>This will be permanent. No way back</p>
 
-						{{ Form::open(array('route' => array('chief.posts.destroy',$post->id),'method'=>'DELETE')) }}
+							{{ Form::open(array('route' => array('chief.posts.destroy',$post->id),'method'=>'DELETE')) }}
 
-							<button type="submit" class="btn btn-danger btn-lg">
-								<i class="glyphicon glyphicon-trash"></i> Yes, delete post
-							</button>
+								<button type="submit" class="btn btn-danger btn-lg">
+									<i class="glyphicon glyphicon-trash"></i> Yes, delete post
+								</button>
 
-						{{ Form::close() }}
+							{{ Form::close() }}
 
-					<br>
-					<button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default btn-sm">no, keep it unharmed</button>
-						
+						<br>
+						<button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default btn-sm">no, keep it unharmed</button>
+							
+
+					</div>
 
 				</div>
-
 			</div>
-		</div>
-	</div>	
+		</div>	
+	@endif
 
 @stop
 

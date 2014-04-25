@@ -115,7 +115,7 @@
    }
 
    .main{
-      /*margin-left:260px;*/
+      margin-top:36px;
    }
 
    .sidebar{
@@ -308,8 +308,13 @@
 
 
 /* ==========================================================================
-   Buttons
+   Buttons, labels, messages
    ========================================================================== */
+
+   .btn:active, .btn.active{
+      -webkit-box-shadow:none;
+      box-shadow: none;
+   }
 
    .label{
       border-radius: 50px;
@@ -332,6 +337,11 @@
 
    .btn-standalone{
       margin-bottom:9px;
+   }
+
+   .messages-error{
+      list-style: none outside none;
+      padding-left: 0;
    }
    
 /* ==========================================================================

@@ -21,6 +21,9 @@ class PostManager{
 	 */
 	public function create( array $input )
 	{
+		// Default is allow_comments
+		if(!isset($input['allow_comments'])) $input['allow_comments'] = 1;
+
 		// Sanitize input
 	 	$postInput = $this->sanitizeInput( $input );
 	 	
@@ -36,6 +39,10 @@ class PostManager{
 			
 			// Synchronise tags and categories
 			$post->synchroniseTags( array_merge( $tag_ids, $category_ids) );
+
+			// Add the author
+			$user = \Bencavens\Chief\ChiefFacade::auth()->getLogged();
+			$post->addAuthor( $user->id, array('order' => 1) );
 
 			return $post;
 		}
@@ -107,11 +114,8 @@ class PostManager{
 		// Slug
 		if(isset($input['slug']))
 		{
-			$input['slug'] = Str::slug($input['slug']);
+			$input['slug'] = unique_slug(Str::slug($input['slug']),$this->repo,$resource);
 		}
-		
-		// unique slug
-		// ....
 		
 		// Allow comments check
 		if(!isset($input['allow_comments'])) $input['allow_comments'] = 0;

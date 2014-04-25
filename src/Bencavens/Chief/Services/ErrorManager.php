@@ -68,13 +68,13 @@ class ErrorManager{
 	/**
 	 * Add translated message
 	 *
-	 * @param 	string 	$trans
+	 * @param 	string 	$key
 	 * @param 	array 	$parameters
 	 * @return  void
 	 */
-	public function trans( $trans, $parameters = array() )
+	public function trans( $key, $parameters = array() )
 	{
-		$message =  Lang::get($trans,$parameters);
+		$message =  Lang::get('chief::'.$key,$parameters);
 
 		$this->add( $message );
 	}

@@ -1,5 +1,6 @@
 <?php namespace Bencavens\Chief\Posts;
 
+
 use Bencavens\Chief\Core\BaseModel;
 
 class Post extends BaseModel{
@@ -92,6 +93,29 @@ class Post extends BaseModel{
 	public function synchroniseTags( array $tag_ids = array() )
 	{
 		$this->tags()->sync( $tag_ids );
+	}
+
+	/**
+	 * Add an author
+	 *
+	 * @param 	int 	$user_id
+	 * @param 	array 	$attributes
+	 * @return 	void
+	 */
+	public function addAuthor( $user_id, array $attributes = array() )
+	{
+		$this->authors()->attach( $user_id, $attributes );
+	}
+
+	/**
+	 * Remove an author
+	 *
+	 * @param 	int 	$user_id
+	 * @return 	void
+	 */
+	public function removeAuthor( $user_id )
+	{
+		$this->authors()->detach( $user_id );
 	}
 
 	/**

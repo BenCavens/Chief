@@ -7,29 +7,21 @@ use View,Redirect,Input,App;
 
 class SettingsController extends Controller{
 	
-	/**
-	 * edit a setting
-	 *
-	 * @param  int 	$user_id
-	 * @return Response
-	 */
-	 public function edit( $user_id )
-	 {
-	 	$user = Chief::user()->getById( $user_id );
-
-	 	return View::make('chief::users.edit',compact('user'));
-	 }
+	public function __construct( UserManager $userManager )
+	{
+		$this->userManager = $userManager;
+	}
 
 	/**
-	 * edit own settings
+	 * edit your own settings
 	 *
 	 * @return Response
 	 */
-	 public function edit_own()
+	 public function edit()
 	 {
 	 	$user = Chief::auth()->getLogged();
 
-	 	return View::make('chief::users.settings.own',compact('user'));
+	 	return View::make('chief::users.settings.edit',compact('user'));
 	 }
 
 	/**
@@ -38,13 +30,13 @@ class SettingsController extends Controller{
 	 * @param  int 	$user_id
 	 * @return Response
 	 */
-	 public function update( $user_id )
+	 public function update()
 	 {
-	 	$userManager = App::make('Bencavens\Chief\Users\UserManager');
+	 	$user = Chief::auth()->getLogged();
 
-	 	if( $userManager->update( $user_id, Input::all() ))
+	 	if( $this->userManager->update( $user->id, Input::all() ))
 	 	{
-	 		return Redirect::route('chief.users.index'); 
+	 		return Redirect::route('chief.posts.index'); 
 	 	}
 
 	 	return Redirect::back()->withInput()->withErrors( Chief::error()->get() );

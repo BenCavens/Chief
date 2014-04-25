@@ -3,7 +3,11 @@
 @section('content')
 
 	<h1>Your Posts 
-		<a class="btn btn-default btn-xs" href="{{ route('chief.posts.create') }}"><i class="glyphicon glyphicon-pencil"></i> create new post</a>
+		
+		@if(false != $permissions->post_create)
+			<a class="btn btn-default btn-xs" href="{{ route('chief.posts.create') }}"><i class="glyphicon glyphicon-pencil"></i> create new post</a>
+		@endif
+	
 	</h1>
 
 	@foreach($posts as $post)
@@ -13,11 +17,12 @@
 			
 			<h3 class="post-title">{{ showStatusDot($post->status) }} {{ $post->title }}
 
-				<span class="actionline">
+				@if(false != $permissions->post_edit)
+					<span class="actionline">
+						<a href="{{ route('chief.posts.edit',$post->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+					</span>
+				@endif
 
-					<a href="{{ route('chief.posts.edit',$post->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-
-				</span>
 
 			</h3>
 			

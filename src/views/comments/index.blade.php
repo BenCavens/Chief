@@ -13,10 +13,12 @@
 				{{ $comment->post ? $comment->post->title : '' }}
 			</span>
 			
-
-			<span class="actionline">
-				<a href="{{ route('chief.comments.edit',$comment->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
-			</span>
+			@if(false != $permissions->comment_edit)
+				<span class="actionline">
+					<a href="{{ route('chief.comments.edit',$comment->id) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+				</span>
+			@endif
+			
 
 			<p class="post-teaser">
 

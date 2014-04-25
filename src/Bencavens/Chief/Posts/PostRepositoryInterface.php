@@ -2,20 +2,29 @@
 
 interface PostRepositoryInterface{
 	
-	// public function getAll();
+	public function getAll();
 
-	// public function getRecent();
+	public function getById( $id );
 
-	// public function getBySlug($slug);
+	public function getBySlug( $slug );
 
-	// public function getByCategory($categoryid);
+	public function getAllPublished();
 
-	// public function getByCategorySlug($categoryslug);
+	public function getAllDraft();
 
-	// public function getBytag($tagid);
+	public function getAllArchived();
 
-	// public function getByTagSlug($tagslug);
+	public function getByAuthor( $author_id );
 
-	// public function getWithoutCategory();
-	
+	public function getPopular();
+
+	public function getVersionsById( $id );
+
+	public function getByTag( $tag_id );
+
+	public function getByTags( array $tag_ids );
+
+	public function getByCategory( $category_id );
+
+	public function getByCategories( array $category_ids );
 }

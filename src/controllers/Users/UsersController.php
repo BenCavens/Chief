@@ -3,10 +3,15 @@
 use Illuminate\Routing\Controller;
 use Bencavens\Chief\ChiefFacade as Chief;
 use Bencavens\Chief\Users\UserManager;
-use View,Redirect,Input,App;
+use View,Redirect,Input,App,Session;
 
 class UsersController extends Controller{
 	
+	public function __construct( UserManager $userManager )
+	{
+		$this->userManager = $userManager;
+	}
+
 	/**
 	 * Index
 	 *
@@ -48,11 +53,9 @@ class UsersController extends Controller{
 	 */
 	 public function store()
 	 {
-	 	$userManager = App::make('Bencavens\Chief\Users\UserManager');
-
-	 	if( $userManager->create( Input::all() ))
+	 	if( ($user = $this->userManager->create( Input::all() )) )
 	 	{
-	 		return Redirect::route('chief.users.index'); 
+	 		return Redirect::route('chief.users.index')->with('messages.success',$user->fullname .' created. Write down the following password: '. Session::get('user_password')); 
 	 	}
 
 	 	return Redirect::back()->withInput()->withErrors( Chief::error()->get() );
@@ -85,9 +88,7 @@ class UsersController extends Controller{
 	 */
 	 public function update( $user_id )
 	 {
-	 	$userManager = App::make('Bencavens\Chief\Users\UserManager');
-
-	 	if( $userManager->update( $user_id, Input::all() ))
+	 	if( $this->userManager->update( $user_id, Input::all() ))
 	 	{
 	 		return Redirect::route('chief.users.index'); 
 	 	}
@@ -102,9 +103,7 @@ class UsersController extends Controller{
 	 */
 	 public function destroy( $user_id )
 	 {
-	 	$userManager = App::make('Bencavens\Chief\Users\UserManager');
-
-	 	if( $userManager->delete( $user_id ))
+	 	if( $this->userManager->delete( $user_id ))
 	 	{
 	 		return Redirect::route('chief.users.index'); 
 	 	}

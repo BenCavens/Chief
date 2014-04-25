@@ -57,7 +57,7 @@ return array(
         'hasher' => 'native',
         
         'groups' => array(
-            'model' => 'Cartalyst\Sentry\Groups\Eloquent\Group',
+            'model' => 'Bencavens\Chief\Users\Group',
         ),
 
         'cookie' => array(

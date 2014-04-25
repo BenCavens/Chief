@@ -30,41 +30,9 @@
 					<br>
 					<a href="{{ URL::previous() }}" class="btn btn-default btn-xs">cancel</a>
 
-					<hr class="post-divider">
-
-					<label>
-						{{ Form::checkbox('allow_comments',1,null) }} Allow comments
-					</label>
-
 				</div>
 
-				<hr class="post-divider" data-toggle="buttons">
-
-				<div class="text-center">
-
-					<h4 class="text-center">Categories</h4>
-
-					@foreach($categories as $category)
-						<label for="cat-{{$category->id}}" class="btn btn-xs btn-default">
-							{{ Form::checkbox('category_ids[]',$category->id,null,array('id' => 'cat-'.$category->id)) }} {{ $category->name }}
-						</label>
-					@endforeach
-
-				</div>
-
-				<div class="text-center">
-
-					<h4 class="text-center">Tags</h4>
-
-					@foreach($tags as $tag)
-						<label for="tag-{{$tag->id}}" class="btn btn-xs btn-default">
-							{{ Form::checkbox('tag_ids[]',$tag->id,null,array('id' => 'tag-'.$tag->id)) }} {{ $tag->name }}
-						</label>
-					@endforeach
-
-				</div>
-
-				
+				<hr class="post-divider">
 
 			</div>
 

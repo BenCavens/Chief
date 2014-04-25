@@ -9,9 +9,9 @@ class ChiefRoutesTest extends TestCase {
 	 */
 	public function testDashboard()
 	{
-		//$crawler = $this->client->request('GET', '/chief');
+		// $crawler = $this->client->request('GET', 'http://localhost/sites/chief/public/chief');
 
-		//$this->assertTrue($this->client->getResponse()->isOk());
+		// $this->assertTrue($this->client->getResponse()->isOk());
 	}
 
 	/**

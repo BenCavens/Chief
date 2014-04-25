@@ -6,7 +6,7 @@ class User extends BaseModel{
 
 	protected $table = 'chiefusers';
 
-	protected $fillable = array('first_name','last_name','slug','email','description','avatar');
+	protected $fillable = array('first_name','last_name','slug','email','activated','password','permissions','description','avatar');
 
 	public function posts()
 	{

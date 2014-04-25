@@ -22,4 +22,9 @@ class SentryUser extends BaseSentryUser {
 
 	public $softDelete = false;
 
+	public function groups()
+	{
+		return $this->belongsToMany('Bencavens\Chief\Users\Group','chiefuser_group','user_id','group_id');
+	}
+
 }

@@ -156,6 +156,52 @@ if(!function_exists('showStatusDot'))
 
 /**
  * --------------------------------------------------------------------------
+ * Unique slug checker
+ * --------------------------------------------------------------------------
+ *
+ * Makes sure the value is unique and appends a numeric value to make sure it does
+ *
+ * @param   string   		$slug
+ * @param   BaseRepository  $repository class
+ * @param   BaseModel 		$resource
+ * @return  string
+ */
+if(!function_exists('unique_slug'))
+{
+	function unique_slug($slug,\Bencavens\Chief\Core\BaseRepository $repository,\Bencavens\Chief\Core\BaseModel $resource = null)
+	{
+		$i = 1;
+
+		// We must have the getBySlug method on our repository
+		if(!method_exists($repository,'getBySlug'))
+		{
+			throw new \Exception('Unique_slug helper method requires the repository method getBySlug');
+		}
+
+		while($i > 0)
+		{
+			// Check if slug is unique
+			$record = $repository->getBySlug((string)$slug);
+
+			if(!is_null($record))
+			{
+				if(is_null($resource) or ($record->id != $resource->id))
+				{
+					$slug = $slug.$i++;
+					continue;
+				}
+			} 
+			
+			$i = 0;
+		}
+
+		return $slug;
+	}
+}
+
+
+/**
+ * --------------------------------------------------------------------------
  * Array_pair
  * --------------------------------------------------------------------------
  *

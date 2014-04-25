@@ -16,7 +16,7 @@ if(isset($errors))
 		// Keep local cache of displayed errors
 		$local_errors = array();
 
-		$error_list = "<ul class='errors'>";
+		$error_list = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul class="messages-error">';
 
 		foreach($errors as $error)
 		{
@@ -28,7 +28,6 @@ if(isset($errors))
 			} 
 		}
 
-		echo $error_list.'</ul>';
+		echo $error_list.'</ul></div>';
 	}
 }
-

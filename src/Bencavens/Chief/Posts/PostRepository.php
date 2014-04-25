@@ -39,6 +39,17 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	}
 
 	/**
+	 * Get Post by Slug
+	 *
+	 * @param 	string $slug
+	 * @return 	Post
+	 */
+	public function getBySlug( $slug )
+	{
+		return $this->model->where('slug',$slug)->first();
+	}
+
+	/**
 	 * Get all published articles
 	 *
 	 * @return  Collection
@@ -87,7 +98,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	 * @param 	int 	$user_id
 	 * @return 	Collection
 	 */
-	public function getByAuthor( $author_id)
+	public function getByAuthor( $author_id )
 	{
 		$this->model = $this->model->join('chiefauthors','chiefposts.id','=','chiefauthors.post_id')
 						     	   ->where('chiefauthors.user_id',$author_id);

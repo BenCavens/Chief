@@ -28,8 +28,52 @@ class Auth{
 	 */
 	public function getLogged()
 	{
-		//dd(BaseAuth::getUser()->toArray());
 		return BaseAuth::getUser();
+	}
+
+	/**
+	 * Check if the user has permission access to certain defined area
+	 * 
+	 * @param 	string 	$permission
+	 * @param 	int 	$user_id
+	 * @return 	bool
+	 */
+	public function hasAccess( $permission, $user_id = null )
+	{
+		$user = !is_null($user_id) ? BaseAuth::findUserById($user_id) : $this->getLogged();
+
+		if( is_null( $user ) or !$user->hasAccess( $permission )) return false;
+
+		return true;
+	}
+
+	/**
+	 * Check if user belongs to a certain group
+	 *
+	 * @param 	string 	$group
+	 * @param 	int 	$user_id
+	 * @return 	bool
+	 */
+	public function inGroup( $group, $user_id = null)
+	{
+		$user = !is_null($user_id) ? BaseAuth::findUserById($user_id) : $this->getLogged();
+
+		$group = BaseAuth::findGroupByName( $group );
+
+		if( is_null( $user ) or is_null($group) or !$user->inGroup( $group )) return false;
+
+		return true;
+	}
+
+	/**
+	 * Check if user has a managementrole
+	 *
+	 * @param 	int 	$user_id
+	 * @return 	bool
+	 */
+	public function isManager( $user_id = null )
+	{
+		return !(false == $this->inGroup('admin',$user_id) and false == $this->inGroup('chief',$user_id));
 	}
 
 	/**

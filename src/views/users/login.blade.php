@@ -1,8 +1,8 @@
-@extends('chief::_layouts.master')
+@extends('chief::_layouts.focus')
 
 @section('content')
 
-	<div class="focus-box">
+	<div class="box focus-box">
 		<h1>Let's get you in</h1>
 
 		@include('chief::_partials.errors')	

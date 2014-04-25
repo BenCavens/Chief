@@ -16,7 +16,13 @@ class PostsController extends Controller{
 	 {
 	 	$posts = Chief::post()->paginate(6)->sort(array('title'))->orderBy('updated_at','DESC')->filter()->getAll();
 
-	 	return View::make('chief::posts.index',compact('posts'));
+	 	$permissions = (object)array(
+	 		'post_create' 	=> Chief::auth()->hasAccess('post-create'),
+	 		'post_edit'		=> Chief::auth()->hasAccess('post-edit'),
+	 		'post_delete'	=> Chief::auth()->hasAccess('post-delete')
+	 	);
+	 	
+	 	return View::make('chief::posts.index',compact('posts','permissions'));
 	 }
 
 	/**
@@ -79,7 +85,13 @@ class PostsController extends Controller{
 	 	$post->category_ids = array_pair($post->categories()->get(),'id');
 	 	$post->tag_ids = array_pair($post->tags()->get(),'id');
 
-	 	return View::make('chief::posts.edit',compact('post','categories','tags'));
+	 	$permissions = (object)array(
+	 		'post_create' 	=> Chief::auth()->hasAccess('post-create'),
+	 		'post_edit'		=> Chief::auth()->hasAccess('post-edit'),
+	 		'post_delete'	=> Chief::auth()->hasAccess('post-delete')
+	 	);
+
+	 	return View::make('chief::posts.edit',compact('post','categories','tags','permissions'));
 	 }
 
 	/**

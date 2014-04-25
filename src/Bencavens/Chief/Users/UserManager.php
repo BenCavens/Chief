@@ -2,7 +2,7 @@
 
 use Bencavens\Chief\Services\ErrorManager;
 
-use Str;
+use Session,Str,Hash;
 
 class UserManager{
 	
@@ -21,6 +21,15 @@ class UserManager{
 	 */
 	public function create( array $input )
 	{
+		// Set activated to default
+		if(!isset($input['activated'])) $input['activated'] = 1;
+
+		// Password Creation
+		if(!isset($input['password'])) $input['password'] = Str::random(8);
+
+		// Keep password for notification to the admin
+		Session::flash('user_password',$input['password']);
+
 		// Sanitize input
 	 	$userInput = $this->sanitizeInput( $input );
 	 	
@@ -87,13 +96,30 @@ class UserManager{
 	public function sanitizeInput( array $input, User $resource = null )
 	{
 		// Filter out our user columns
-		$columns = array('first_name','last_name','slug','email','description');
+		$columns = array('first_name','last_name','slug','email','description','activated','password');
 
 		foreach($input as $attribute => $val )
 		{
 			if(!in_array($attribute,$columns)) unset($input[$attribute]);
 		}
 
+		// Hash the password
+		if(isset($input['password'])) $input['password'] = Hash::make($input['password']);
+
+		if(is_null($resource) or empty($resource->slug))
+		{
+			if((!isset($input['slug']) or empty($input['slug'])))
+			{
+				$input['slug'] = $input['first_name'].$input['last_name'];
+			}
+		}
+
+		// Sluggify
+		if(isset($input['slug']))
+		{
+		 	$input['slug'] = unique_slug(Str::slug($input['slug']),$this->repo,$resource); 
+		}
+		
 		return $input;
 	}
 
@@ -128,8 +154,13 @@ class UserManager{
 			}
 		}
 
-		// Check unique slug
-		// ....
+		// Unique email
+		$user = $this->repo->getByEmail( $input['email'] );
+
+		if(is_null($resource) or $user->id != $resource->id)
+		{
+			$this->errorManager->trans('errors.users.email.unique');
+		}
 
 		return ($this->errorManager->hasAny()) ? false : true;
 	}

@@ -16,7 +16,12 @@ class CommentsController extends Controller{
 	 {
 	 	$comments = Chief::comment()->paginate(10)->orderBy('created_at','DESC')->getAll();
 
-	 	return View::make('chief::comments.index',compact('comments'));
+	 	$permissions = (object)array(
+	 		'comment_edit'		=> Chief::auth()->hasAccess('comment-edit'),
+	 		'comment_delete'	=> Chief::auth()->hasAccess('comment-delete')
+	 	);
+
+	 	return View::make('chief::comments.index',compact('comments','permissions'));
 	 }
 
 	/**
@@ -58,7 +63,12 @@ class CommentsController extends Controller{
 	 {
 	 	$comment = Chief::comment()->getById( $comment_id );
 
-	 	return View::make('chief::comments.edit',compact('comment'));
+	 	$permissions = (object)array(
+	 		'comment_edit'		=> Chief::auth()->hasAccess('comment-edit'),
+	 		'comment_delete'	=> Chief::auth()->hasAccess('comment-delete')
+	 	);
+
+	 	return View::make('chief::comments.edit',compact('comment','permissions'));
 	 }
 
 	/**

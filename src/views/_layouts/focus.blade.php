@@ -38,52 +38,11 @@
 </head>
 <body>
    
-  <nav class="nav-section">
-
-    <div class="container">
-      <div class="brand"><span class="brand-logo">Chief</span></div>
-
-        <ul class="nav">
-
-          <li class="right">
-
-           <?php $target = Request::segment(2); ?>
-
-            @if($user = \Bencavens\Chief\ChiefFacade::auth()->getLogged())
-              <a href="{{ route('chief.user.logout') }}"><i class="glyphicon glyphicon-log-out"></i></a></li>
-              <li class="right"><a href="{{ route('chief.user.settings') }}">{{ $user->first_name }}</a></li>
-              
-            @else
-              <a href="{{ route('chief.user.login') }}">login</a></li>
-            @endif
-          <li><a {{ $target == 'posts' ? 'class="active"' : '' }} href="{{ route('chief.posts.index') }}">Posts</a></li>
-          
-          @if($user = \Bencavens\Chief\ChiefFacade::auth()->hasAccess('comments'))
-
-            <li>
-                <a {{ $target == 'comments' ? 'class="active"' : '' }} href="{{ route('chief.comments.index') }}">comments
-
-                  @if( ($pending = count(\Bencavens\Chief\ChiefFacade::comment()->getAllPending())) > 0 )
-                    <span class="label label-warning">{{ $pending }}</span>
-                  @endif
-
-                </a>
-              </li>
-
-          @endif
-
-           @if($user = \Bencavens\Chief\ChiefFacade::auth()->isManager())
-
-              
-              <li><a {{ $target == 'users' ? 'class="active"' : '' }} href="{{ route('chief.users.index') }}">Users</a></li>
-
-            @endif
-       
-        </ul>
-
-    </div>
-
-  </nav>
+  <div class="container">
+      <div class="brand">
+        <span class="brand-logo">Chief</span>
+      </div>
+  </div>
 
   <div class="main">
 

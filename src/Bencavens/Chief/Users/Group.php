@@ -1,8 +1,9 @@
 <?php namespace Bencavens\Chief\Users;
 
+use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model {
+class Group extends SentryGroup {
 	
 	protected $table = 'chiefgroups';
 

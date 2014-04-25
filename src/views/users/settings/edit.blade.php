@@ -4,10 +4,9 @@
 
 	<h1 class="pagetitle">{{ $user->fullname }}</h1>
 
-	{{ Form::model($user,array('route' => array('chief.users.update',$user->id),'method'=>'PUT')) }}
+	{{ Form::model($user,array('route' => array('chief.user.settings.update'),'method'=>'PUT')) }}
 
 		@include('chief::_partials.errors')
-
 	
 		<div class="row">
 
@@ -18,11 +17,6 @@
 					{{ Form::email('email',null,array('class' => 'form-control','autocomplete' => 'off','placeholder' => 'email','id' => 'email')) }}
 
 					<span class="note">Email will also be used as login</span>
-				</div>
-
-				<div class="form-group">
-					<label>Role</label>
-					{{ Form::select('groups',$groups,null,array('class' => 'form-control')) }}
 				</div>
 
 				<div class="form-group">
@@ -45,14 +39,9 @@
 				
 				</div>
 				
-				<br>
-
-				<span class="note">
-					<strong>Chief</strong> can manage posts, comments and users.<br>
-					<strong>Writer</strong> can manage posts and comments.<br>
-					<strong>Guest</strong> can only view posts but cannot edit them.  
-				</span>
+			
 				
+
 			</div>
 
 			<div class="col-md-4">
@@ -61,44 +50,11 @@
 					<br>
 					<a href="{{ URL::previous() }}" class="btn btn-default btn-xs">cancel</a>
 
-					<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-user-modal">
-						<i class="glyphicon glyphicon-trash"></i> 
-					</a>
-
 			</div>
 
 		</div>
 
 	{{ Form::close() }}
-
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="delete-user-modal-label" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				
-				<div class="modal-body text-center">
-
-					<p class="text-danger">Are you sure you want to remove this user entirely? <br>This will be permanent!</p>
-
-						{{ Form::open(array('route' => array('chief.users.destroy',$user->id),'method'=>'DELETE')) }}
-
-							<button type="submit" class="btn btn-danger btn-lg">
-								<i class="glyphicon glyphicon-trash"></i> Yes, remove user
-							</button>
-
-						{{ Form::close() }}
-
-					<br>
-					<button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default btn-sm">no, let 'm stay around</button>
-						
-
-				</div>
-
-			</div>
-		</div>
-	</div>	
 
 @stop
 

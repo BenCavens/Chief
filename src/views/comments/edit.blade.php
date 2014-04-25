@@ -19,8 +19,15 @@
 
 			<div class="col-md-4">
 
-				{{ Form::submit('submit',array('class'=>'btn btn-lg btn-success')) }}
-				<a href="{{ URL::previous() }}">cancel</a>
+				{{ Form::submit('save',array('class'=>'btn btn-lg btn-success btn-standalone')) }}
+				<br>
+				<a href="{{ URL::previous() }}" class="btn btn-default btn-xs">cancel</a>
+
+				@if(false != $permissions->comment_delete)
+					<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-comment-modal">
+						<i class="glyphicon glyphicon-trash"></i> 
+					</a>
+				@endif
 
 				<div class="btn-group" data-toggle="buttons">
 				  
@@ -44,11 +51,34 @@
 
 	{{ Form::close() }}
 
-	{{ Form::open(array('route' => array('chief.comments.destroy',$comment->id),'method'=>'DELETE')) }}
+	@if(false != $permissions->comment_delete)
+		<!-- Modal -->
+		<div class="modal fade" id="delete-comment-modal" tabindex="-1" role="dialog" aria-labelledby="delete-comment-modal-label" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					
+					<div class="modal-body text-center">
 
-		{{ Form::submit('delete') }}
+						<p class="text-danger">Permanently delete this comment?</p>
 
-	{{ Form::close() }}
+							{{ Form::open(array('route' => array('chief.comments.destroy',$comment->id),'method'=>'DELETE')) }}
+
+								<button type="submit" class="btn btn-danger btn-lg">
+									<i class="glyphicon glyphicon-trash"></i> Yes, delete comment
+								</button>
+
+							{{ Form::close() }}
+
+						<br>
+						<button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default btn-sm">no, keep it unharmed</button>
+							
+
+					</div>
+
+				</div>
+			</div>
+		</div>	
+	@endif
 
 @stop
 

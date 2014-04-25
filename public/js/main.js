@@ -12,7 +12,7 @@
 // Addon to bootstrap button js where on load state the checked state is not mitigated
 function buttonCheckable()
 {
-	 var $buttons = $('.btn-checkable'),
+	var $buttons = $('.btn-checkable'),
         $inputs   = $buttons.find('input[type="checkbox"],input[type="radio"]');
 
     // Default view on load

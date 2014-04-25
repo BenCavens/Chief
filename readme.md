@@ -59,15 +59,25 @@ That's it! You seem good to go now.
 ## Gameplan
 
 - core classes: basemodel and baserepository
-- thumbnail addition for post: allow to choose an image as the post thumbnail for use in post overviews
-- provide easy spamfilter options (e.g. Akismet) for comment insertions via API. 
-- documentation around API
-- example snippets for frontend: blog overview, post detail page, comment form, comment insertion and validation
-- chief logo
-- filter and sorting options for posts, comments and user indexes
-- user roles and permissions: admin, manager, chief, writer, co-writer and guest
-- versioning for postrecords
-- install script (handle separate), needs to be removed after installment
-- dashboard for each user with his drafts and latest changed posts
-- admin settings page for general options (behind admin auth filter) like language, backup, API key??
-- chief::elements() - mysterious no?!
+- documentation 
+	- around API
+	- example snippets for frontend: blog overview, post detail page, comment form, comment insertion and validation
+-post
+	- filter and sorting options for posts, comments and user indexes
+	- versioning for postrecords
+	- thumbnail addition for post: allow to choose an image as the post thumbnail for use in post overviews
+	- provide easy spamfilter options (e.g. Akismet) for comment insertions via API. 
+- user
+	- set default random password on creation of new user: admin recieves this password once after creation
+	- allow for sending mail to user with login details
+	- avatar
+	- allow for user to change his password (via reset password)
+	- user roles and permissions: admin, manager, chief, writer, co-writer and guest
+	- dashboard for each user with his drafts and latest changed posts
+	- how to set author for a deleted user? -> set static userdetails for author or softdelete user?
+	- validation for unique email and slug
+- lovely
+	- chief logo
+	- install script (handle separate), needs to be removed after installment
+	- admin settings page for general options (behind admin auth filter) like language, backup, API key??
+	- chief::elements() - mysterious no?!
