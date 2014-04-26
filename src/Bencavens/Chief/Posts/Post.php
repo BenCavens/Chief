@@ -128,7 +128,7 @@ class Post extends BaseModel{
 	 */
 	public function teaser($max = 210,$ending = null, $clean = true)
 	{
-		return teaser( $this->plaincontent,$max, $ending, $clean );
+		return chiefteaser( $this->plaincontent,$max, $ending, $clean );
 	}
 
 	/**

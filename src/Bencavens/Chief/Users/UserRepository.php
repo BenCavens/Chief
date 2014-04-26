@@ -20,4 +20,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface{
 		return $this->model->where('email',$email)->first();
 	}
 
+	/**
+	 * Find a user by slug (unique)
+	 * 
+	 * @param 	string  $slug
+	 * @return  User
+	 */
+	public function getBySlug( $slug )
+	{
+		return $this->model->where('slug',$slug)->first();
+	}
+
 }

@@ -9,9 +9,9 @@
 * 
 *
 */
-if(!function_exists('teaser'))
+if(!function_exists('chiefteaser'))
 {
-	function teaser($text,$max = null,$ending = null,$clean = true)
+	function chiefteaser($text,$max = null,$ending = null,$clean = true)
 	{
 		if(is_null($max) or is_string($max)) return $text;
 

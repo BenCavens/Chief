@@ -61,7 +61,7 @@ class Uploader{
 			}
 			catch(Exception $e)
 			{
-				throw new Exception('Could not create directory ['.$dir.']. Permission denied');
+				throw new Exception('Could not create or write to directory ['.$dir.']. Permission denied');
 			}
 		}
 

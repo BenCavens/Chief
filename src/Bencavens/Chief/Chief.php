@@ -5,6 +5,8 @@ use Bencavens\Chief\Users\UserRepositoryInterface;
 use Bencavens\Chief\Posts\CommentRepositoryInterface;
 use Bencavens\Chief\Tags\TagRepositoryInterface;
 use Bencavens\Chief\Tags\CategoryRepositoryInterface;
+use Bencavens\Chief\Posts\PostManager;
+use Bencavens\Chief\Posts\CommentManager;
 use Bencavens\Chief\Services\Auth;
 use Bencavens\Chief\Services\ErrorManager;
 use Exception,Config,App;
@@ -19,6 +21,8 @@ class Chief{
 								 CommentRepositoryInterface $commentRepo,
 								 TagRepositoryInterface $tagRepo,
 								 CategoryRepositoryInterface $categoryRepo,
+								 PostManager $postManager,
+								 CommentManager $commentManager,
 								 ErrorManager $error )
 	{
 		$this->postRepo 	= $postRepo;
@@ -27,6 +31,8 @@ class Chief{
 		$this->commentRepo 	= $commentRepo;
 		$this->tagRepo 		= $tagRepo;
 		$this->categoryRepo = $categoryRepo;
+		$this->postManager  = $postManager;
+		$this->commentManager = $commentManager;
 		$this->error 		= $error;
 	}
 
@@ -98,6 +104,26 @@ class Chief{
 	public function error()
 	{
 		return $this->error;
+	}
+
+	/**
+	 * Chief PostManager
+	 * 
+	 * @return PostManager
+	 */
+	public function postManager()
+	{
+		return $this->postManager;
+	}
+
+	/**
+	 * Chief CommentManager
+	 * 
+	 * @return CommentManager
+	 */
+	public function commentManager()
+	{
+		return $this->commentManager;
 	}
 
 	/**

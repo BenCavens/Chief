@@ -62,7 +62,7 @@ That's it! You seem good to go now.
 - documentation 
 	- around API
 	- example snippets for frontend: blog overview, post detail page, comment form, comment insertion and validation
--post
+- post
 	- filter and sorting options for posts, comments and user indexes
 	- versioning for postrecords
 	- thumbnail addition for post: allow to choose an image as the post thumbnail for use in post overviews

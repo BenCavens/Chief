@@ -31,12 +31,6 @@ class CommentManager{
 		{
 			$comment = $this->repo->create( $commentInput );
 		
-			$tag_ids = isset($input['tag_ids']) ? $input['tag_ids'] : array();
-			$category_ids = isset($input['category_ids']) ? $input['category_ids'] : array();
-			
-			// Synchronise tags and categories
-			$comment->synchroniseTags( array_merge( $tag_ids, $category_ids) );
-
 			return $comment;
 		}
 

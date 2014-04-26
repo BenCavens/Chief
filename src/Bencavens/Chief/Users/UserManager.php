@@ -157,7 +157,7 @@ class UserManager{
 		// Unique email
 		$user = $this->repo->getByEmail( $input['email'] );
 
-		if(is_null($resource) or $user->id != $resource->id)
+		if(!is_null($user) and (is_null($resource) or ($user->id != $resource->id)))
 		{
 			$this->errorManager->trans('errors.users.email.unique');
 		}
