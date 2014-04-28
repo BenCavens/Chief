@@ -1,5 +1,5 @@
 <?php namespace Bencavens\Chief\Core;
 
-use Illuminate\Database\Eloquent\Model;
+use Bencavens\Core\Models\BaseModel as CoreBaseModel;
 
-abstract class BaseModel extends Model{}
+abstract class BaseModel extends CoreBaseModel{}
