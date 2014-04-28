@@ -41,9 +41,11 @@ class PostManager{
 			$post->synchroniseTags( array_merge( $tag_ids, $category_ids) );
 
 			// Add the author
-			$user = \Bencavens\Chief\ChiefFacade::auth()->getLogged();
-			$post->addAuthor( $user->id, array('order' => 1) );
-
+			if(false != ($user = \Bencavens\Chief\ChiefFacade::auth()->getLogged()) )
+			{
+				$post->addAuthor( $user->id, array('order' => 1) );
+			}
+		
 			return $post;
 		}
 
