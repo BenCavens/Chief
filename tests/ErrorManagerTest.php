@@ -50,10 +50,10 @@ class ErrorManagerTest extends TestCase {
 		$errorManager = App::make('Bencavens\Chief\Services\ErrorManager');
 		$errorManager->forget();
 
-		$errorManager->trans('chief::errors.posts.title.required');
+		$errorManager->trans('errors.posts.title.required');
 
 		$this->assertTrue($errorManager->hasAny());
-		$this->assertTrue($errorManager->first() == "title is required");
+		$this->assertTrue($errorManager->first() == "Title is required");
 		
 	}
 
@@ -70,7 +70,7 @@ class ErrorManagerTest extends TestCase {
 		$errorManager->trans('test.test');
 
 		$this->assertTrue($errorManager->hasAny());
-		$this->assertTrue($errorManager->first() == 'test.test');
+		$this->assertTrue($errorManager->first() == 'chief::test.test');
 		
 	}
 

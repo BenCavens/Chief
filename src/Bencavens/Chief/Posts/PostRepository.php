@@ -2,8 +2,8 @@
 
 use Bencavens\Chief\Core\BaseRepository;
 use Bencavens\Chief\Core\ChiefRepositoryInterface;
-use Bencavens\Chief\Core\Traits\Filterable;
-use Bencavens\Chief\Core\Traits\Sortable;
+use Bencavens\Core\Traits\Filterable;
+use Bencavens\Core\Traits\Sortable;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface,ChiefRepositoryInterface{
 
