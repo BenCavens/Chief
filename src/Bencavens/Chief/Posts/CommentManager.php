@@ -75,7 +75,7 @@ class CommentManager{
 	public function sanitizeInput( array $input, Comment $resource = null )
 	{
 		// Filter out our comment columns
-		$columns = array('content','status','username','email');
+		$columns = array('content','status','username','email','post_id');
 
 		foreach($input as $attribute => $val )
 		{

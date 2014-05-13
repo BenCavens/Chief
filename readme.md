@@ -38,6 +38,8 @@ Create the Chief alias `'Chief'	=> 'Bencavens\Chief\ChiefFacade'` in the config/
 Note: Chief posts makes use of the great redactor wysiwyg editor and handle image uploads behind the scenes mostly without any hassle. 
 Should your image inserts fail, be sure to verify that the `public/packages/bencavens/chief/assets` path exists and is writable. 
 
+When updating Chief, it is possible you have to clear your storage/views folder since this is still being fetched from even when a newer view is present. Need to look into that Laravel storage engine.
+
 #### Mail
 For optimal usage, make sure your mail environment is up and running. 
 Chief will use your default mail settings for its user interaction, like password resetting and the likes.
