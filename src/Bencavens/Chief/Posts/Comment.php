@@ -6,6 +6,8 @@ class Comment extends BaseModel{
 
 	protected $table = 'chiefcomments';
 
+	protected $fillable = array('username','email','content','post_id','user_id','status','parent_id');
+
 	public function author()
 	{
 		return $this->belongsTo('Bencavens\Chief\Users\User','user_id');

@@ -82,6 +82,8 @@ class CommentManager{
 			if(!in_array($attribute,$columns)) unset($input[$attribute]);
 		}
 
+		// Default status is approved
+		if(!isset($input['status'])) $input['status'] = 'approved';
 		
 		return $input;
 	}
@@ -95,7 +97,7 @@ class CommentManager{
 	 */
 	public function validateInput( array $input, Comment $resource = null )
 	{
-		$required = array('content');
+		$required = array('content','post_id');
 
 		foreach($required as $require)
 		{
