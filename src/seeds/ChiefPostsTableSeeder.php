@@ -33,7 +33,7 @@ class ChiefPostsTableSeeder extends Seeder {
                 'views'     => 20,
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
-                'published_at'  => null
+                'published_at'  => date('Y-m-d H:i:s',time() + 2000)
             ),
              array(
                 'id'        => '3',
@@ -49,6 +49,21 @@ class ChiefPostsTableSeeder extends Seeder {
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
                 'published_at'  => null
+            ),
+             array(
+                'id'        => '4',
+                'title'     => 'third post',
+                'subtitle'  => 'subtitle',
+                'slug'      => 'third-post',
+                'content'   => 'this is the third post yall',
+                'status'    => 'published',
+                'parent_id' => 2,
+                'comment_count' => 41,
+                'image_id'  => 0,
+                'views'     => 48485,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s'),
+                'published_at'  => date('Y-m-d H:i:s',time() - 2000)
             )
         );
 

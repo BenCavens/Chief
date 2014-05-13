@@ -67,6 +67,7 @@ That's it! You seem good to go now.
 	- versioning for postrecords
 	- thumbnail addition for post: allow to choose an image as the post thumbnail for use in post overviews
 	- provide easy spamfilter options (e.g. Akismet) for comment insertions via API. 
+	- default status for comment is approved unless our spamfilter detects something is fishy, it will be set to pending
 - user
 	- set default random password on creation of new user: admin recieves this password once after creation
 	- allow for sending mail to user with login details

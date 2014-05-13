@@ -7,7 +7,7 @@ class Post extends BaseModel{
 
 	protected $table = 'chiefposts';
 
-	protected $fillable = array('title','subtitle','slug','content','status','allow_comments','comment_count','views','parent_id');
+	protected $fillable = array('title','subtitle','slug','content','status','allow_comments','comment_count','views','parent_id','published_at');
 
 	protected $softDelete =true;
 
@@ -60,6 +60,21 @@ class Post extends BaseModel{
 	}
 
 	/**
+	 * Get publish date to local standard
+	 * 
+	 * TODO: refactor to use datetime and local laravel locale
+	 * @return 	string
+	 */
+	public function getPublishDateAttribute()
+	{
+		$published_at = $this->getAttribute('published_at');
+
+		if(is_null($published_at)) return null;
+
+		return datetime('d/m/Y',$published_at);
+	}
+
+	/**
 	 * Bump view
 	 *
 	 * @param 	int 	$amount
@@ -93,6 +108,20 @@ class Post extends BaseModel{
 	public function synchroniseTags( array $tag_ids = array() )
 	{
 		$this->tags()->sync( $tag_ids );
+	}
+
+	/**
+	 * Synchronise authors
+	 * 
+	 * @param 	array 	$author_ids
+	 * @return 	void
+	 */
+	public function synchroniseAuthors( array $author_ids = array() )
+	{
+		// Set the 'order' of authors. First one is the lead author
+		$authors = array_combine(array_keys($author_ids),$author_ids);
+
+		$this->authors()->sync( $authors );
 	}
 
 	/**

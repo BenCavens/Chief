@@ -56,6 +56,19 @@
 
 					<hr>
 
+					<div>
+						<label>Author</label>
+						{{ Form::select('author_ids[]',$author_ids,null,array('class'=>'form-control')) }}
+					</div>
+
+					<br>
+
+					<div>
+						<label>Publish date</label>
+						{{ Form::text('publish_date',null,array('class'=>'form-control','placeholder' => 'dd/mm/yyyy')) }}
+						<p class="note">This date is not a scheduler for future publication. <br>It is a date that will be shown in your blog.</p>
+					</div>
+
 					<div id="post-slug">
 						<label>Permalink</label>
 						<span class="note">{{ Form::text('slug',null,array('class' => 'form-control','autocomplete' => 'off')) }}</span>

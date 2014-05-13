@@ -79,11 +79,13 @@ class PostsController extends Controller{
 
 	 	$categories = Chief::category()->getAll();
 	 	$tags = Chief::tag()->getAll();
+	 	$author_ids = array_pair(Chief::user()->getAll(),'fullname','id');
 
 	 	// checkbox population
 	 	// Add Tags and Categories to Post as id arrays
 	 	$post->category_ids = array_pair($post->categories()->get(),'id');
 	 	$post->tag_ids = array_pair($post->tags()->get(),'id');
+	 	$post->author_ids = array_pair($post->authors()->get(),'id');
 
 	 	$permissions = (object)array(
 	 		'post_create' 	=> Chief::auth()->hasAccess('post-create'),
@@ -91,7 +93,7 @@ class PostsController extends Controller{
 	 		'post_delete'	=> Chief::auth()->hasAccess('post-delete')
 	 	);
 
-	 	return View::make('chief::posts.edit',compact('post','categories','tags','permissions'));
+	 	return View::make('chief::posts.edit',compact('post','categories','tags','author_ids','permissions'));
 	 }
 
 	/**

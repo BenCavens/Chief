@@ -73,12 +73,15 @@ class PostManager{
 		{
 			$post = $this->repo->update( $post_id, $postInput );
 		
-			$tag_ids = isset($input['tag_ids']) ? $input['tag_ids'] : array();
-			$category_ids = isset($input['category_ids']) ? $input['category_ids'] : array();
-			
+			$tag_ids 		= isset($input['tag_ids']) ? $input['tag_ids'] : array();
+			$category_ids 	= isset($input['category_ids']) ? $input['category_ids'] : array();
+			$author_ids 	= isset($input['author_ids']) ? $input['author_ids'] : array($resource->authors()->first()->id);
+
 			// Synchronise tags and categories
 			$post->synchroniseTags( array_merge( $tag_ids, $category_ids) );
-			//$post->synchroniseCategories( $category_ids );
+			
+			// Synchronise authors
+			$post->synchroniseAuthors( $author_ids );
 
 			return $post;
 		}
@@ -97,7 +100,7 @@ class PostManager{
 	public function sanitizeInput( array $input, Post $resource = null )
 	{
 		// Filter out our post columns
-		$columns = array('title','subtitle','slug','content','status','allow_comments');
+		$columns = array('title','subtitle','slug','content','status','allow_comments','publish_date','published_at');
 
 		foreach($input as $attribute => $val )
 		{
@@ -121,6 +124,22 @@ class PostManager{
 		
 		// Allow comments check
 		if(!isset($input['allow_comments'])) $input['allow_comments'] = 0;
+
+		// Published_at date
+		if(isset($input['publish_date']))
+		{
+			if(!empty($input['publish_date']))
+			{
+				$input['published_at'] = \Datetime::createFromFormat('d/m/Y',$input['publish_date']);
+			}
+
+			else
+			{
+				$input['published_at'] = null;
+			}
+
+			unset($input['publish_date']);
+		}
 
 		return $input;
 	}

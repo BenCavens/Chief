@@ -41,12 +41,16 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	/**
 	 * Get Post by Slug
 	 *
+	 * Since this method is part of the frontend API
+	 * 
 	 * @param 	string $slug
 	 * @return 	Post
 	 */
 	public function getBySlug( $slug )
 	{
-		return $this->model->where('slug',$slug)->first();
+		return $this->model->where('status','published')
+						   ->where('slug',$slug)
+						   ->first();
 	}
 
 	/**

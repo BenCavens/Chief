@@ -14,8 +14,8 @@ class ChiefPostManagerTest extends TestCase {
 
 		$input = array(
 
-			'title' 	=> 'third blogpost',
-			'slug'		=> 'third-post',
+			'title' 	=> 'fourth blogpost',
+			'slug'		=> 'fourth-post',
 			'content'	=> 'inhoud van het artikel'
 
 		);
@@ -26,6 +26,8 @@ class ChiefPostManagerTest extends TestCase {
 		$this->assertTrue( $post instanceof \Bencavens\Chief\Posts\Post );
 
 		$postDB = $postManager->repo->getById($post->id);
+
+		$this->assertNotNull($postDB);
 
 		$this->assertTrue( $post->slug == $postDB->slug );
 

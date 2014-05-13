@@ -25,6 +25,8 @@ class ChiefSeeder extends Seeder {
         $this->insertGroups();
 
         $this->addGroupToAdmin();
+
+        $this->insertExamplePost();
         		
 	}
 
@@ -168,11 +170,40 @@ class ChiefSeeder extends Seeder {
         }
         catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
-            echo 'User was not found.';
+            echo 'User was not found...';
         }
         catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
         {
             echo 'Group was not found.';
         }
+    }
+
+    /**
+     * Insert Example Post
+     *
+     * @return void
+     */
+    public function insertExamplePost()
+    {
+        $posts = array(
+            array(
+                'id'        => 1,
+                'title'     => 'Your First article on Chief',
+                'subtitle'  => 'Congratulations on putting on your Chief Hat',
+                'slug'      => 'first-post',
+                'content'   => 'Hello<br>and welcome to Chief. Hope you enjoy yourself around here. ',
+                'status'    => 'published',
+                'parent_id' => 0,
+                'comment_count' => 0,
+                'image_id'  => 1,
+                'views'     => 0,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s'),
+                'published_at'  => null
+            )
+        );
+
+        // Uncomment the below to run the seeder
+        DB::table('chiefposts')->insert($posts);
     }
 }

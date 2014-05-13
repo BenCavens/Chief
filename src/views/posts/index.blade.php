@@ -36,7 +36,7 @@
 
 			<div class="post-metadata">
 
-				{{ $post->created_at->format('F d, Y') }} (last updated on {{ $post->updated_at->format('F d, Y H:i') }})
+				by {{ implode(array_pair($post->authors()->get()->toArray(),'fullname'),',') }} op {{ $post->created_at->format('F d, Y') }} (updated {{ $post->updated_at->format('F d, Y H:i') }})
 
 				@if($post->comment_count > 0)
 

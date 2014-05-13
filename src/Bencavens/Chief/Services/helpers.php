@@ -243,3 +243,29 @@ if(!function_exists('array_pair'))
 		return $values;
 	}
 }
+
+/**
+ * Format a datetime to a given format
+ * 
+ * @return 	string
+ */
+if(!function_exists('datetime'))
+{
+	function datetime($format,$datetime = null,$original_format = null)
+	{
+		// Default is today
+		if(is_null($datetime))
+		{
+			$datetime = date('Y-m-d H:i:s');
+		}		
+
+		if(!is_null($original_format))
+		{
+			$dt = \DateTime::createFromFormat($original_format,$datetime);
+			
+			return false != $dt ? $dt->format($format) : null;
+		}
+
+		return date($format,strtotime($datetime));
+	}
+}
