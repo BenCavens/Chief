@@ -2,6 +2,19 @@
 
 return array(
 
+	/*
+	|--------------------------------------------------------------------------
+	| Main chief email
+	|--------------------------------------------------------------------------
+	|
+	| Main email address that is used as sender for all password reminders
+	| and confirmation mails
+	*/
+	'mail' => [
+
+		'from' 	=> ['Chief admin','chief@localhost.com']
+
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +78,7 @@ return array(
         ),
 
         'users' => array(
-            'model' => 'Bencavens\Chief\Users\SentryUser',
+            'model' => 'Bencavens\Chief\Users\User',
             'login_attribute' => 'email',
         ),
 

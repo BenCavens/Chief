@@ -11,7 +11,7 @@
 
 use Cartalyst\Sentry\Users\Eloquent\User as BaseSentryUser;
 
-class SentryUser extends BaseSentryUser {
+class SentryUser_OLD extends BaseSentryUser {
 	
 	protected $table = 'chiefusers';
 

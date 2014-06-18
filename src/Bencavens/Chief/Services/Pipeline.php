@@ -2,7 +2,6 @@
 
 use Bencavens\Chief\Users\UserRepositoryInterface;
 use Bencavens\Chief\Users\User;
-use Bencavens\Chief\Users\SentryUser;
 use Bencavens\Chief\Services\ErrorManager;
 use Exception,stdClass,Mail;
 
@@ -23,17 +22,18 @@ class Pipeline{
 	{
 		/**
          * Activation code
-         * access the sentry user class for sentry method 'getActivationCode'
+         * access the  user class for  method 'getActivationCode'
          *
          */
-        $sentryUser = SentryUser::find( $user->id );
+       // $User = User::find( $user->id );
 
         // Activation code
-        $activationcode = $sentryUser->getActivationCode();
+        $activationcode = $user->getActivationCode();
 
         // Send activation code and redirect to confirmpage
         Mail::send('chief::_emails.activation',compact('user','activationcode'), function($message) use ($user)
         {
+            $message->from();
             $message->to($user->email);
                     
         });
@@ -48,13 +48,13 @@ class Pipeline{
 	{
 		/**
          * Activation code
-         * access the sentry user class for sentry method 'getActivationCode'
+         * access the  user class for  method 'getActivationCode'
          *
          */
-        $sentryUser = SentryUser::find( $user->id );
+        // User = User::find( $user->id );
 
         // Reset password code
-        $resetpasswordcode = $sentryUser->getResetPasswordCode();
+        $resetpasswordcode = $user->getResetPasswordCode();
 
         // Send activation code and redirect to confirmpage
         Mail::send('chief::_emails.resetpassword',compact('user','resetpasswordcode'), function($message) use ($user)

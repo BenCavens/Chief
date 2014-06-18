@@ -71,6 +71,7 @@ That's it! You seem good to go now.
 	- provide easy spamfilter options (e.g. Akismet) for comment insertions via API. 
 	- default status for comment is approved unless our spamfilter detects something is fishy, it will be set to pending
 - user
+	- unify auth user with user entity. Now there are two different entities: SentryUser and User which can be confusing
 	- set default random password on creation of new user: admin recieves this password once after creation
 	- allow for sending mail to user with login details
 	- avatar
