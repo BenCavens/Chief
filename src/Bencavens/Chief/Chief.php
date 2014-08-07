@@ -36,102 +36,23 @@ class Chief{
 		$this->error 		= $error;
 	}
 
-	/**
-	 * Postrepository
-	 * 
-	 * @return PostRepository
-	 */
-	public function post()
-	{
-		return $this->postRepo;
-	}
+	public function post(){ return $this->postRepo; }
+	public function user(){ return $this->userRepo; }
+	public function auth(){ return $this->auth; }
+	public function comment(){ return $this->commentRepo; }
 
-	/**
-	 * userrepository
-	 * 
-	 * @return userRepository
-	 */
-	public function user()
-	{
-		return $this->userRepo;
-	}
-
-	/**
-	 * Chief Auth
-	 * 
-	 * @return Auth
-	 */
-	public function auth()
-	{
-		return $this->auth;
-	}
-
-	/**
-	 * commentrepository
-	 * 
-	 * @return commentRepository
-	 */
-	public function comment()
-	{
-		return $this->commentRepo;
-	}
-
-	/**
-	 * tagrepository
-	 * 
-	 * @return tagRepository
-	 */
-	public function tag()
-	{
-		return $this->tagRepo;
-	}
-
-	/**
-	 * categoryrepository
-	 * 
-	 * @return categoryRepository
-	 */
-	public function category()
-	{
-		return $this->categoryRepo;
-	}
-
-	/**
-	 * Chief Error Manager
-	 * 
-	 * @return ErrorManager
-	 */
-	public function error()
-	{
-		return $this->error;
-	}
-
-	/**
-	 * Chief PostManager
-	 * 
-	 * @return PostManager
-	 */
-	public function postManager()
-	{
-		return $this->postManager;
-	}
-
-	/**
-	 * Chief CommentManager
-	 * 
-	 * @return CommentManager
-	 */
-	public function commentManager()
-	{
-		return $this->commentManager;
-	}
+	public function tag(){ return $this->tagRepo; }
+	public function category(){ return $this->categoryRepo; }
+	public function error(){ return $this->error; }
+	public function postManager(){ return $this->postManager; }
+	public function commentManager(){ return $this->commentManager; }
 
 	/**
 	 * Dynamic call to own repositories
 	 *
 	 * @param 	string 	$method
 	 * @param 	array 	$parameters
-	 * @return 	PostRepository
+	 * @return 	Repository
 	 */
 	 public function __call($method, $parameters)
 	{
