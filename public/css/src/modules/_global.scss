@@ -1,0 +1,221 @@
+body{
+	background-color:#f5f5f5;
+	font-family: $font-stack;
+	color: $first-color;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+
+   h1 a{
+      color:inherit;
+   }
+
+   h1 a:hover{
+      text-decoration: none;
+      cursor:pointer;
+   }
+
+   h4{
+      font-style:italic;
+      font-weight: normal;
+      margin-top:36px;
+      color:#666666;
+   }
+
+
+/* ==========================================================================
+   Generic Modules
+   ========================================================================== */
+
+   .note{
+      font-style:italic;
+      color:#666666;
+      font-size:11px;
+      line-height: 12px;
+      margin-top:5px;
+   }
+
+   .pagetitle{
+      margin:36px 0;
+   }
+
+   .pagetitle-sub{
+      display: block;
+      font-size: 0.55em;
+      color: #ccc;
+      font-weight: normal;
+      font-style: italic;
+      letter-spacing: -0.05em;
+   }
+
+
+/* ==========================================================================
+   box & sections
+   ========================================================================== */
+
+   .box{
+     background-color:#ffffff;
+	  padding:18px;
+	  border:1px solid #dddddd;
+	  box-shadow:0 1px 1px #dddddd;
+	  border-radius: 3px;
+	  position:relative;
+	  margin:9px auto;
+   }
+
+   .focus-box{
+	  margin:90px auto;
+	  max-width:360px;
+	}
+
+   .box-expanded{
+      margin:0 auto;
+   }
+
+   .section{
+      margin:18px 0;
+   }
+
+   .section h2{
+      margin-top:0;
+   }
+
+
+  
+
+/* ==========================================================================
+   User cards
+   ========================================================================== */
+
+   .user-cards{
+      width:100%;
+      clear:both;
+   }
+
+   .user-card{
+      width:32%;
+      float:left;
+      margin-right:1%;
+      margin-bottom: 1%;
+      border:1px solid #dddddd;
+      border-radius: 3px;
+      padding:6px;
+   }
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+   .footer{
+   		background-color:#dddddd;
+   		border-top:1px solid #cccccc;
+   		padding-top:36px;
+         margin-top:36px;
+   		font-size:11px;
+   }
+
+
+/* ==========================================================================
+   Table
+   ========================================================================== */
+
+   table{
+      border-spacing:1px;
+   }
+
+   /* Fix ugly double bottom border for theadings */
+   .table>thead>tr>th {
+      border-bottom: 1px solid #dddddd;
+   }
+
+   .buttoncell{
+      text-align: right;
+   }
+
+   .label-cell{
+      text-align:left;
+      color:#999999;
+      font-style:italic;
+   }
+
+   .table-xs{
+      font-size:12px;
+   }
+
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+
+   .form-group,.form-innergroup{
+      margin-bottom:6px;
+   }
+
+   .form-group input,
+   .form-group select,
+   .form-group textarea{
+      margin-bottom:6px;
+   }
+
+   .input-xs{
+      height:22px;
+      line-height: 22px;
+      font-size:12px;
+      padding:1px 3px;
+   }
+
+   .input-group-btn button{
+      padding-bottom:7px;
+   }
+
+   /* Subtle focus */
+   .form-control:focus{
+      outline: none;
+      outline-color: transparent;
+      outline-style: none;
+      box-shadow: none;
+      border-color:#aaaaaa;
+   }
+
+
+/* ==========================================================================
+   Buttons, labels, messages
+   ========================================================================== */
+
+   .btn:active, .btn.active{
+      -webkit-box-shadow:none;
+      box-shadow: none;
+   }
+
+   .label{
+      border-radius: 50px;
+   }
+
+   .label-dot{
+      height:8px;
+      width:8px;
+      display:inline-block;
+      padding:0;
+   }
+
+   .tooltip-trigger{
+      cursor:pointer;
+   }
+
+   h3 .label-dot{
+      line-height: 0.7; /* better vertical alignment in header */
+   }
+
+   .btn-standalone{
+      margin-bottom:9px;
+   }
+
+   .messages-error{
+      list-style: none outside none;
+      padding-left: 0;
+   }
+

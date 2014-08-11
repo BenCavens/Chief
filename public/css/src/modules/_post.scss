@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Article list element
+   ========================================================================== */
+
+   .post{
+      margin-bottom:36px;
+   }
+
+   .teaser{
+      color:#999999;
+      font-size:0.9em;
+   }
+
+   .post-title{
+      margin-bottom: 0;
+   }
+
+   .post-subtitle{
+      font-family: "freight-text-pro",Georgia,Cambria,"Times New Roman",Times,serif;
+      letter-spacing: .01rem;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.1;
+      color:#999999;
+   }
+
+   .post-metadata{
+      font-style:italic;
+      color:#333333;
+      font-size:0.9em;
+   }
+
+   .post-divider{
+      width:180px;
+      height:1px;
+      display:block;
+      margin:18px auto;
+      background-color: #dddddd;
+      border:0;
+      border-bottom:1px solid #f5f5f5;
+      border-radius:50%;
+      outline:0;
+   }
+
+/* ==========================================================================
+   Post form elements
+   ========================================================================== */
+
+   .form-control-post{
+      border:0;
+      outline:0;
+      padding:9px;
+      padding-bottom:0; /* realistic writing line */
+      width: 100%;
+   }
+
+   .post-txtr{
+      font-family: "freight-text-pro",Georgia,Cambria,"Times New Roman",Times,serif;
+      letter-spacing: .01rem;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1.4;
+   }
+
+
+/* ==========================================================================
+   Comments
+   ========================================================================== */
+
+   .comment{
+      padding:9px 0;
+      border-bottom:1px solid #dddddd;
+   }
+
+   .comment-title{
+      font-weight: bold;
+   }
