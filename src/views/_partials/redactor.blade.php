@@ -1,5 +1,5 @@
 <!-- Redactor is here -->
-<script src="{{ asset('packages/bencavens/chief/js/vendor/redactor/redactor.min.js') }}"></script>
+<script src="{{ asset('packages/bencavens/chief/js/dist/vendor/redactor/redactor.min.js') }}"></script>
 
 <script>
 $(function()

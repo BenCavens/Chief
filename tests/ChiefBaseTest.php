@@ -24,7 +24,7 @@ class ChiefBaseTest extends TestCase {
 		$this->assertTrue( is_object( $chief ));
 	}
 
-		/**
+	/**
 	 * Reach Chief object
 	 *
 	 * @return void

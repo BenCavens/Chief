@@ -31,8 +31,8 @@ Route::group(array('prefix' => 'chief','before' => 'chief.auth'),function(){
 
 	// POST ROUTES
 	Route::get('posts',array('as' => 'chief.posts.index','uses' =>'Bencavens\Chief\Controllers\PostsController@index'));
-	Route::get('posts/create',array('as' => 'chief.posts.create','before' => 'chief.hasAccess:post-create', 'uses' =>'Bencavens\Chief\Controllers\PostsController@create'));
 	Route::get('posts/{id}',array('as' => 'chief.posts.show','uses' =>'Bencavens\Chief\Controllers\PostsController@show'));
+	Route::get('posts/create',array('as' => 'chief.posts.create','before' => 'chief.hasAccess:post-create', 'uses' =>'Bencavens\Chief\Controllers\PostsController@create'));
 	Route::post('posts',array('as' => 'chief.posts.store','before' => 'chief.hasAccess:post-create', 'uses' =>'Bencavens\Chief\Controllers\PostsController@store'));
 	Route::get('posts/{id}/edit',array('as' => 'chief.posts.edit','before' => 'chief.hasAccess:post-edit', 'uses' =>'Bencavens\Chief\Controllers\PostsController@edit'));
 	Route::put('posts/{id}',array('as' => 'chief.posts.update','before' => 'chief.hasAccess:post-edit', 'uses' =>'Bencavens\Chief\Controllers\PostsController@update'));
@@ -40,8 +40,8 @@ Route::group(array('prefix' => 'chief','before' => 'chief.auth'),function(){
 
 	// COMMENT ROUTES
 	Route::get('comments',array('as' => 'chief.comments.index','uses' =>'Bencavens\Chief\Controllers\CommentsController@index'));
-	Route::get('comments/create',array('as' => 'chief.comments.create','before' => 'chief.hasAccess:comment-create', 'uses' =>'Bencavens\Chief\Controllers\CommentsController@create'));
 	Route::get('comments/{id}',array('as' => 'chief.comments.show','uses' =>'Bencavens\Chief\Controllers\CommentsController@show'));
+	Route::get('comments/create',array('as' => 'chief.comments.create','before' => 'chief.hasAccess:comment-create', 'uses' =>'Bencavens\Chief\Controllers\CommentsController@create'));
 	Route::post('comments',array('as' => 'chief.comments.store','before' => 'chief.hasAccess:comment-create', 'uses' =>'Bencavens\Chief\Controllers\CommentsController@store'));
 	Route::get('comments/{id}/edit',array('as' => 'chief.comments.edit','before' => 'chief.hasAccess:comment-edit', 'uses' =>'Bencavens\Chief\Controllers\CommentsController@edit'));
 	Route::put('comments/{id}',array('as' => 'chief.comments.update','before' => 'chief.hasAccess:comment-edit', 'uses' =>'Bencavens\Chief\Controllers\CommentsController@update'));

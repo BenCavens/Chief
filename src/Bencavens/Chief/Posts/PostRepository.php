@@ -25,8 +25,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	/**
 	 * Fetch
 	 *
-	 * Don't include our versions by default. 
-	 * Versions of posts should be fetched by specific methods like getVersionsById
+	 * Override the fetch metdho so we don't include article versions. 
 	 * 
 	 * @return  Illuminate\Database\Eloquent\Collection
 	 *
@@ -132,7 +131,6 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	{
 		$this->model = $this->model->where('parent_id',$post_id)->orderBy('created_at','DESC');
 		
-		// Go around our PostRepo fetch so we can retrieve versions
 		return parent::fetch();
 	}
 
@@ -143,23 +141,25 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface,C
 	 * @param 	array 	$input
 	 * @return 	Model
 	 */
-	 public function createVersion($post_id, array $input )
+	 public function createVersion(Post $post, array $input )
 	 {
-	 	// create version record with 'old' data
-	 	$version = $this->getById($post_id);
+	 	$version = $post;
 
-	 	$created_at_original = $version->created_at;
+	 	//$created_at_original = $version->created_at;
 
 	 	$version->id = null;
-	 	$version->parent_id = $post_id;
+	 	$version->parent_id = $post->id;
 	 	$version->created_at = null;
 	 	$version->save();
 
-	 	// update main record with new data
-	 	$input['id'] = $post_id;
-	 	$input['created_at'] = $created_at_original;
-	 	$this->model->create( $input );
+	 	dd($input);
 
+	 	return $post->update($input);
+	 	// update main record with new data
+	 	// $input['id'] = $post_id;
+	 	// $input['created_at'] = $created_at_original;
+
+	 	// $this->model->create( $input );
 	 } 
 
 	

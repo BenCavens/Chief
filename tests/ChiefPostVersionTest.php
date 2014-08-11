@@ -2,7 +2,11 @@
 
 class ChiefPostVersionTest extends TestCase {
 
-	
+	public function setUp()
+	{
+		$this->chief = App::make('Bencavens\Chief\Chief');
+	}
+
 	/**
 	 * Reach Chief PostRepository
 	 *
@@ -65,6 +69,21 @@ class ChiefPostVersionTest extends TestCase {
 		{
 			$this->assertTrue($post->parent_id == 0);
 		}
+		
+	}
+
+	/**
+	 * Create new version
+	 *
+	 * @return void
+	 */
+	public function test_can_create_version()
+	{
+		$post = $this->chief->post()->getById(1);
+
+		$versioned = $post->createVersion();
+
+		$this->assertEquals($versioned->title,$post->title);
 		
 	}
 

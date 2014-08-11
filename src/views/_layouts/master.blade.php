@@ -31,9 +31,9 @@
   <link rel="apple-touch-icon-precomposed" href="{{ asset('packages/bencavens/chief/icons/apple-touch-icon-precomposed.png') }}">
 
   <!-- stylesheets -->
-  <link href="{{ asset('packages/bencavens/chief/css/vendor/bootstrap.min.css') }}" rel="stylesheet" media="screen">
-  <link href="{{ asset('packages/bencavens/chief/js/vendor/redactor/redactor.css') }}" rel="stylesheet" />
-  <link href="{{ asset('packages/bencavens/chief/css/main.css') }}" rel="stylesheet" media="screen">
+  <link href="{{ asset('packages/bencavens/chief/css/dist/vendor/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+  <link href="{{ asset('packages/bencavens/chief/js/dist/vendor/redactor/redactor.css') }}" rel="stylesheet" />
+  <link href="{{ asset('packages/bencavens/chief/css/dist/main.min.css') }}" rel="stylesheet" media="screen">
 
 </head>
 <body>
@@ -98,12 +98,11 @@
   </div>
 
 <!-- scripts -->
-<script src="{{ asset('packages/bencavens/chief/js/vendor/jquery-1.10.2.min.js') }}"></script>
-<script src="{{ asset('packages/bencavens/chief/js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('packages/bencavens/chief/js/dist/vendor.min.js') }}"></script>
 
 @yield('redactor')
 
-<script src="{{ asset('packages/bencavens/chief/js/main.js') }}"></script>
+<script src="{{ asset('packages/bencavens/chief/js/dist/main.min.js') }}"></script>
 
 
 </body>

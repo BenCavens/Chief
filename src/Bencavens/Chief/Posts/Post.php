@@ -11,26 +11,26 @@ class Post extends BaseModel{
 
 	protected $softDelete =true;
 
-	public function authors()
+	/**
+	 * Create a new version from this post
+	 * 
+	 * @return Post
+	 */
+	public function createVersion()
 	{
-		return $this->belongsToMany('Bencavens\Chief\Users\User','chiefauthors','post_id','user_id')->withPivot('order')->orderBy('order','ASC');
+		$data = [
+			'title' 	=> $this->title,
+			'subtitle' 	=> $this->subtitle,
+			'slug' 		=> $this->slug,
+			'content' 	=> $this->content,
+			'allow_comments' 	=> $this->allow_comments,
+			'comment_count' 	=> $this->comment_count,
+			'views' 			=> $this->views,
+			'parent_id' => $this->id
+		];
+
+		return new static($data);
 	}
-
-	public function comments()
-	{
-		return $this->hasMany('Bencavens\Chief\Posts\Comment','post_id');
-	}
-
-	public function tags()
-    {
-        return $this->morphToMany('Bencavens\Chief\Tags\Tag', 'taggable','chieftaggables')->where('chieftags.cat',0);
-    }
-
-    public function categories()
-    {
-        return $this->morphToMany('Bencavens\Chief\Tags\Category','taggable','chieftaggables','taggable_id','tag_id')->where('chieftags.cat',1);
-        //return $this->morphToMany('Bencavens\Chief\Tags\Category', 'categorizable','chiefcategorizables');
-    }
 
 	/**
 	 * Clean up HTML
@@ -169,5 +169,26 @@ class Post extends BaseModel{
 	{
 		return !!$this->getAttribute('allow_comments');
 	}
+
+	public function authors()
+	{
+		return $this->belongsToMany('Bencavens\Chief\Users\User','chiefauthors','post_id','user_id')->withPivot('order')->orderBy('order','ASC');
+	}
+
+	public function comments()
+	{
+		return $this->hasMany('Bencavens\Chief\Posts\Comment','post_id');
+	}
+
+	public function tags()
+    {
+        return $this->morphToMany('Bencavens\Chief\Tags\Tag', 'taggable','chieftaggables')->where('chieftags.cat',0);
+    }
+
+    public function categories()
+    {
+        return $this->morphToMany('Bencavens\Chief\Tags\Category','taggable','chieftaggables','taggable_id','tag_id')->where('chieftags.cat',1);
+        //return $this->morphToMany('Bencavens\Chief\Tags\Category', 'categorizable','chiefcategorizables');
+    }
 
 }
